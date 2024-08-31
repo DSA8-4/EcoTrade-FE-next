@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
+    "firebase": "^10.13.1",
+    "next": "14.2.7",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.7"
+    "sockjs-client": "^1.6.1"
   },
   "devDependencies": {
     "eslint": "^8",
