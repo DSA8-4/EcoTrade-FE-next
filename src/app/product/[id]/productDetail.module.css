@@ -1,0 +1,188 @@
+/* Product Container */
+.productContainer {
+  display: flex;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Product Image */
+.productImage {
+  width: 65%;
+  background-color: #ddd;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.productImage img {
+  max-width: 100%;
+  max-height: 300px;
+}
+
+/* Product Info */
+.productInfo {
+  padding: 20px;
+  width: 50%;
+}
+
+.productContents {
+  position: relative;
+  width: 90px;
+  color: rgb(68, 56, 56);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+.productTitle {
+  font-size: 24px;
+  margin: 0;
+}
+
+.productPrice {
+  font-size: 32px;
+  color: black;
+  margin: 10px 0;
+}
+
+.productFirstDetails {
+  border-top: 1px solid #ddd;
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+/* Product Second Details */
+.productSecondDetails {
+  border-top: 1px solid #ddd;
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+.productDetails h3 {
+  margin: 0 0 10px 0;
+}
+
+.productDescription {
+  padding: 10px 0;
+}
+
+/* Buttons */
+.button {
+  padding: 23px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-weight: 700;
+  width: 30%;
+  height: 50%;
+}
+
+.favoriteButton {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.favoriteButton:hover {
+  background-color: #c6bdbd;
+}
+
+.contactButton {
+  background-color: #4caf50;
+  color: white;
+}
+
+.contactButton:hover {
+  background-color: #45a049;
+}
+
+.buyButton {
+  background-color: #d9534f;
+  color: white;
+}
+
+.buyButton:hover {
+  background-color: #b34f44;
+}
+
+/* Header */
+.mainHeader {
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.headerContent {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-right: 2.5rem;
+}
+
+.mainNav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.mainNav li {
+  margin-right: 20px;
+}
+
+.mainNav a {
+  text-decoration: none;
+  color: #4d4d4d;
+  font-weight: bold;
+}
+
+/* Search */
+.search input {
+  padding: 0.9rem 25px;
+  background-color: #e9ecef;
+  border: none;
+  border-radius: 0.6rem;
+  margin-right: 8px;
+}
+
+/* User Actions */
+.chatButton {
+  padding: 0.5rem 20px;
+  background-color: #55514e95;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-right: -1rem;
+  cursor: pointer;
+}
+
+.loginLink,
+.logoutLink {
+  text-decoration: none;
+  color: #4b4848;
+  font-weight: bold;
+  margin-left: 45px;
+}
+
+.logoutLink {
+  margin-left: 40px;
+  color: #4b4848;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.registerLink {
+  text-decoration: none;
+  color: #4b4848;
+  font-weight: bold;
+  margin-left: 20px;
+}

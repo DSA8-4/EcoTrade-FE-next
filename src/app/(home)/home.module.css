@@ -1,0 +1,76 @@
+/* .hero {
+  background-image: url(/images/Ecobackground.jpg);
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #39774cce;
+} */
+
+.heroContent {
+  position: relative;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-bottom: -8px;
+}
+
+.h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.ctaButtons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btnPrimary {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btnSecondary {
+  background-color: rgba(255, 255, 255, 0.94);
+  color: black;
+}
+
+.btnPrimary:hover {
+  background-color: #45a049;
+}
+
+.btnSecondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

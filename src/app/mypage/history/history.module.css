@@ -1,0 +1,108 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title {
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.material-icons {
+  font-size: 36px; /* 아이콘 크기 조절 */
+  margin-right: 10px; /* 아이콘과 텍스트 사이의 간격 조절 */
+  color: #27ae60; /* 아이콘 색상 조절 */
+}
+
+/* 섹션 스타일 */
+.transactionSection {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* 거래 목록 스타일 */
+.transactionList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.transactionItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemName {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.itemPrice {
+  font-size: 14px;
+  color: #666;
+}
+
+.itemStatus {
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.statusOnSale {
+  background-color: #4caf50; /* 판매중 상태 초록색 */
+  color: #fff;
+}
+
+.statusInProgress {
+  background-color: #ff9800; /* 거래중 상태 주황색 */
+  color: #fff;
+}
+
+.statusCompleted {
+  background-color: #2196f3; /* 거래완료 상태 파란색 */
+  color: #fff;
+}
+
+.navigationButtons {
+  display: flex;
+  justify-content: center;
+  /* position: absolute;
+  bottom: 20px;
+  left: 50%; */
+}
+
+.navButton {
+  text-decoration: none;
+  color: #fff;
+  background-color: #1ea355;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+  margin: 0 10px;
+}
+
+.navButton:hover {
+  background-color: #13793e;
+}

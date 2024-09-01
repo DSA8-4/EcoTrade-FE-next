@@ -1,0 +1,68 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 100px;
+  padding: 40px 20px;
+  color: white;
+  position: relative;
+  background-image: url("/images/EcoPoint.PNG");
+  background-size: cover;
+  background-position: center;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(46, 154, 78, 0.9);
+  z-index: -1;
+}
+
+.header {
+  margin-top: -5px;
+  color: #4d4d4d;
+  background: white;
+  text-decoration: none;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+}
+
+.description {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.cardsContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 6px;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 20px;
+  flex: 1;
+  text-align: center;
+}
+
+.cardImage {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.cardTitle {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.cardText {
+  font-size: 16px;
+}
