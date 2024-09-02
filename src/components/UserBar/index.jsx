@@ -18,7 +18,8 @@ const UserBar = () => {
       <button
         onClick={() => router.push("/productUpload")}
         type="button"
-        className="chat-button">
+        className="chat-button"
+      >
         상품등록
       </button>
       <div className="user-info">
@@ -28,6 +29,7 @@ const UserBar = () => {
           height={40}
           src={"/images/profile-icon.png"}
           alt="프로필"
+          loading="eager"
         />
         <div id="welcomeMessage">{loggedInUser}</div>
       </div>

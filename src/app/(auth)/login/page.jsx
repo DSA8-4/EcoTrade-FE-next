@@ -5,11 +5,9 @@ import { useState } from "react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    member_id: "",
+    password: "",
   });
-
-  const [responseMessage, setResponseMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -19,29 +17,25 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
-
+    e.preventDefault();
     try {
-      // Make a POST request to your Spring Boot backend
-      const response = await fetch("http://localhost:8090/api/submit", {
+      const response = await fetch("http://localhost:8090/members/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
       const data = await response.json();
-      setResponseMessage(data.message || "Form submitted successfully!");
+      alert(data.message || "로그인되었습니다");
     } catch (error) {
       console.error("Error submitting form:", error);
-      setResponseMessage("There was an error submitting the form.");
+      alert("아이디 또는 비밀번호가 일치하지 않습니다");
     }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.loginContainer}>
@@ -49,10 +43,11 @@ const Login = () => {
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
             type="text"
-            name="username"
+            name="member_id"
             placeholder="아이디"
             required
             className={styles.input}
+            onChange={handleChange}
           />
           <input
             type="password"
@@ -60,6 +55,7 @@ const Login = () => {
             placeholder="비밀번호"
             required
             className={styles.input}
+            onChange={handleChange}
           />
           <button type="submit" className={styles.button}>
             로그인
