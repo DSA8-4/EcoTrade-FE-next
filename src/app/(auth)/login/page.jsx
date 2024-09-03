@@ -28,8 +28,11 @@ const Login = () => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      const data = await response.json();
-      alert(data.message || "로그인되었습니다");
+      const { message, name, member_id, token } = await response.json();
+      alert(message || "로그인되었습니다");
+      sessionStorage.setItem("name", name);
+      sessionStorage.setItem("member_id", member_id);
+      sessionStorage.setItem("token", token);
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("아이디 또는 비밀번호가 일치하지 않습니다");
@@ -53,6 +56,7 @@ const Login = () => {
             type="password"
             name="password"
             placeholder="비밀번호"
+            autoComplete="off"
             required
             className={styles.input}
             onChange={handleChange}

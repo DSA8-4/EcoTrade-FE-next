@@ -22,26 +22,19 @@ const ProductUpload = () => {
     contents: "",
     productImages: [],
   });
-  const [images, setImages] = useState([]);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-
-    console.log(formData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const imageUrls = await uploadImages();
-
-      setFormData({ ...formData, productImages: imageUrls });
-      console.log("All files uploaded. URLs:", imageUrls);
-
+      console.log(formData);
       const response = await fetch("http://localhost:8090/products/new", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -61,12 +54,15 @@ const ProductUpload = () => {
     }
   };
 
-  const changeImage = (e) => {
-    // fileItems = Array.from(e.target.files);
-    setImages(Array.from(e.target.files));
+  const changeImage = async (e) => {
+    const result = await uploadImages(Array.from(e.target.files));
+    setFormData({
+      ...formData,
+      productImages: result,
+    });
   };
 
-  const uploadImages = () => {
+  const uploadImages = (images) => {
     const uploadPromises = images.map((fileItem) => {
       const storageRef = ref(storage, "images/" + fileItem.name);
       const uploadTask = uploadBytesResumable(storageRef, fileItem);

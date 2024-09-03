@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const page = () => {
+const ProductDetail = () => {
   return (
     <>
       <div className="header-content">
@@ -112,4 +112,4 @@ const page = () => {
     </>
   );
 };
-export default page;
+export default ProductDetail;
