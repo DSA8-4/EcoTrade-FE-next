@@ -11,3 +11,134 @@
   display: flex;
   flex-direction: column;
 }
+
+.h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* 정보 박스 스타일 */
+.infoBox {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  width: 100%;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 스타일 */
+.infoBox strong {
+  display: block;
+  color: #27ae60;
+  margin-bottom: 5px;
+}
+
+/* 인라인 컨테이너 스타일 */
+.inlineContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* 작은 입력 필드 스타일 */
+.smallInputField {
+  width: 200px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+/* 라벨과 입력 필드를 더 가깝게 붙이기 */
+.inlineContainer label,
+.inlineContainer strong {
+  margin-right: 5px;
+  white-space: nowrap; /* 라벨이 줄바꿈되지 않도록 처리 */
+}
+
+/* 비밀번호 입력 필드 사이 간격 */
+.passwordFieldContainer {
+  margin-bottom: 15px;
+}
+
+/* 기본 버튼 스타일 */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.button:hover {
+  background-color: #2bc02b;
+}
+
+/* 거래내역 버튼 스타일 */
+.transactionHistoryButton {
+  background-color: #f39c12;
+}
+
+.transactionHistoryButton:hover {
+  background-color: #e67e22;
+}
+
+/* 회원 정보 수정 버튼 스타일 */
+.editProfileButton {
+  background-color: #3498db;
+}
+
+.editProfileButton:hover {
+  background-color: #2980b9;
+}
+
+/* 저장 버튼 스타일 */
+.saveProfileButton {
+  background-color: #2ecc71;
+  margin-left: 10px;
+}
+
+.saveProfileButton:hover {
+  background-color: #27ae60;
+}
+
+/* 취소 버튼 스타일 */
+.cancelProfileButton {
+  background-color: #e74c3c;
+  margin-left: 10px;
+}
+
+.cancelProfileButton:hover {
+  background-color: #c0392b;
+}
+
+/* 비밀번호 수정 버튼 스타일 */
+.updatePasswordButton {
+  background-color: #8e44ad;
+}
+
+.updatePasswordButton:hover {
+  background-color: #71368a;
+}
+
+/* 회원탈퇴 버튼 컨테이너 */
+.deleteAccountContainer {
+  margin-top: auto;
+  text-align: center;
+}
+
+/* 회원탈퇴 버튼 */
+.deleteAccountButton {
+  background-color: #e74c3c;
+  width: auto;
+}
+
+.deleteAccountButton:hover {
+  background-color: #c0392b;
+}
