@@ -1,3 +1,7 @@
 .loggedIn {
   display: flex;
 }
+
+.logoutButton {
+  cursor: pointer;
+}

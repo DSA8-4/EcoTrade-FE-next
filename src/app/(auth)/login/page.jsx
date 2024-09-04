@@ -1,9 +1,16 @@
+// src/app/login.jsx
+
 "use client";
 import Link from "next/link";
 import styles from "../auth.module.css";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { AuthContext } from "@/context/AuthContext";
 
 const Login = () => {
+  const router = useRouter();
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     member_id: "",
     password: "",
@@ -28,11 +35,10 @@ const Login = () => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      const { message, name, member_id, token } = await response.json();
-      alert(message || "로그인되었습니다");
-      sessionStorage.setItem("name", name);
-      sessionStorage.setItem("member_id", member_id);
-      sessionStorage.setItem("token", token);
+
+      const userData = await response.json();
+      login(userData); // Update the global state with user data
+      router.push("/");
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("아이디 또는 비밀번호가 일치하지 않습니다");

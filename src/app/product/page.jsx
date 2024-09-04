@@ -12,7 +12,7 @@ const Product = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        setProductList(data);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);

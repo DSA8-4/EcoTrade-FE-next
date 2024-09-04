@@ -1,13 +1,34 @@
+"use client";
 import Link from "next/link";
 import styles from "./mypage.module.css";
+import { useEffect } from "react";
 
 const MyPage = () => {
+  useEffect(() => {
+    fetch(`http://localhost:8090/members/mypage`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
+  }, []);
   return (
     <div className={styles.container}>
-      <h1 className={styles.h1} id="welcomeMessage"></h1>
+      <h1 className={styles.h1}></h1>
 
       <div className={styles.infoBox}>
-        <Link href="/mypage/history" id="transactionHistoryButton">
+        <Link href="/mypage/history">
           <button
             className={`${styles.button} ${styles.transactionHistoryButton}`}
           >
@@ -17,13 +38,12 @@ const MyPage = () => {
       </div>
 
       <div className={styles.infoBox}>
-        <strong>Member ID:</strong> <span id="member_id"></span>
+        <strong>Member ID:</strong>
       </div>
 
       <div className={styles.infoBox}>
         <div className={styles.inlineContainer}>
           <strong>Name</strong>
-          <span id="nameDisplay"></span>
           <input
             type="text"
             id="nameInput"
@@ -35,7 +55,6 @@ const MyPage = () => {
       <div className={styles.infoBox}>
         <div className={styles.inlineContainer}>
           <strong>Email</strong>
-          <span id="emailDisplay"></span>
           <input
             type="email"
             id="emailInput"

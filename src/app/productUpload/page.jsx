@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./productUpload.module.css";
 import { initializeApp } from "firebase/app";
 import {
@@ -9,18 +9,29 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { firebaseConfig } from "@/utils/config";
-
-// let fileItems = [];
+import { useRouter } from "next/navigation";
 
 const ProductUpload = () => {
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
+  const router = useRouter();
+  const [member_id, setMember_id] = useState("");
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    setMember_id(sessionStorage.getItem("member_id"));
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      router.replace("login");
+    }
+  }, [router]);
 
   const [formData, setFormData] = useState({
     title: "",
     price: "",
     contents: "",
     productImages: [],
+    member_id,
   });
 
   const handleChange = (e) => {
@@ -136,11 +147,7 @@ const ProductUpload = () => {
           onChange={changeImage}
         />
 
-        <div className={styles.imagePreview}>
-          {
-            // formData.images.map((a) =)
-          }
-        </div>
+        <div className={styles.imagePreview}>{}</div>
 
         <button className={styles.button} type="submit">
           등록하기
