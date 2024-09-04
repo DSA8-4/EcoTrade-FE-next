@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import style from "./products.module.css";
+
 const Product = () => {
   const [productList, setProductList] = useState([]);
   useEffect(() => {
@@ -25,4 +26,5 @@ const Product = () => {
     </>
   );
 };
+
 export default Product;

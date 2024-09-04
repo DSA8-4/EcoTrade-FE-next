@@ -20,7 +20,8 @@ export default function Home() {
           </button>
           <button
             className={`${styles.btn} ${styles.btnSecondary}`}
-            onClick={() => router.push("/ETDetail")}>
+            onClick={() => router.push("/ETDetail")}
+          >
             자세히 보기
           </button>
         </div>

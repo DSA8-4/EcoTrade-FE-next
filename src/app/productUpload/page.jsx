@@ -91,7 +91,7 @@ const ProductUpload = () => {
               console.log("File available at", url);
               resolve(url);
             });
-          }
+          },
         );
       });
     });

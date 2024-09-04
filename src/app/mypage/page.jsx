@@ -1,6 +1,6 @@
 "use client";
-import Link from "next/link";
 import styles from "./mypage.module.css";
+import Link from "next/link";
 import { useEffect } from "react";
 
 const MyPage = () => {

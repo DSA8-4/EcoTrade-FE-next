@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 const UserBar = () => {
   const { user, logout } = useContext(AuthContext);
   const router = useRouter();
+
   return (
     <div className={styles.user}>
       {user ? (
