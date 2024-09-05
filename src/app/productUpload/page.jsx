@@ -103,7 +103,6 @@ const ProductUpload = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.h1}>상품 등록</h1>
-      <button onClick={() => console.log(formData)}>dfdfdf</button>
       <form onSubmit={handleSubmit} className={styles.productForm}>
         <label className={styles.label} htmlFor="title">
           상품명
