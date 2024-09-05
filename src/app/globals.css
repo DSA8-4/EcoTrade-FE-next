@@ -126,3 +126,8 @@ body {
   bottom: 0;
   background-color: #39774cce;
 }
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6; /* Faded appearance */
+}

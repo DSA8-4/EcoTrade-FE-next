@@ -15,24 +15,23 @@ const ProductUpload = () => {
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
   const router = useRouter();
-  const [member_id, setMember_id] = useState("");
-
-  useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    setMember_id(sessionStorage.getItem("member_id"));
-    if (!token) {
-      alert("로그인이 필요합니다.");
-      router.replace("login");
-    }
-  }, [router]);
-
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     price: "",
     contents: "",
     productImages: [],
-    member_id,
+    member_id:
+      typeof window !== "undefined" ? sessionStorage.getItem("member_id") : "",
   });
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      router.replace("login");
+    }
+  }, [router]);
 
   const handleChange = (e) => {
     setFormData({
@@ -66,11 +65,13 @@ const ProductUpload = () => {
   };
 
   const changeImage = async (e) => {
+    setUploading(true);
     const result = await uploadImages(Array.from(e.target.files));
     setFormData({
       ...formData,
       productImages: result,
     });
+    setUploading(false);
   };
 
   const uploadImages = (images) => {
@@ -102,6 +103,7 @@ const ProductUpload = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.h1}>상품 등록</h1>
+      <button onClick={() => console.log(formData)}>dfdfdf</button>
       <form onSubmit={handleSubmit} className={styles.productForm}>
         <label className={styles.label} htmlFor="title">
           상품명
@@ -149,8 +151,8 @@ const ProductUpload = () => {
 
         <div className={styles.imagePreview}>{}</div>
 
-        <button className={styles.button} type="submit">
-          등록하기
+        <button className={styles.button} type="submit" disabled={uploading}>
+          {!uploading ? "등록하기" : "이미지 업로딩..."}
         </button>
       </form>
     </div>
