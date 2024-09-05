@@ -47,7 +47,10 @@ const ProductUpload = () => {
       console.log(formData);
       const response = await fetch("http://localhost:8090/products/new", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
         body: JSON.stringify(formData),
       });
 
