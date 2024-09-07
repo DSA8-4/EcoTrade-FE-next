@@ -12,7 +12,7 @@ export const metadata = {
   description: "Used product save environment",
 };
 const navItems = [
-  { name: "카테고리", link: "/category" },
+  { name: "상품목록", link: "/product" },
   { name: "인기상품", link: "/popular" },
   { name: "Eco포인트란?", link: "/EcoPoint" },
 ];

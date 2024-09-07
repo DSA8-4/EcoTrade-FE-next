@@ -6,7 +6,7 @@ import styles from "./home.module.css";
 export default function Home() {
   const router = useRouter();
   return (
-    <section className={styles.hero}>
+    <section className={styles.container}>
       <div className={styles.heroContent}>
         <p className={styles.subtitle}>중고 거래로 지구를 지켜요</p>
         <h1 className={styles.h1}>EcoTrade에 오신 것을 환영합니다</h1>
