@@ -3,10 +3,13 @@
 import { useEffect, useState } from 'react';
 import Icon from '@/components/Icon';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './products.module.css';
 
 const Product = () => {
   const [productList, setProductList] = useState([]);
+  const router = useRouter();
+
   useEffect(() => {
     fetch('http://localhost:8090/products/list')
       .then((response) => {
@@ -53,6 +56,7 @@ const Product = () => {
       <ul className={styles.productList}>
         {productList.map(({ productId, title, price, heart, imageUrls, createdTime }) => (
           <li
+            onClick={() => router.push(`/product/${productId}`)}
             className={styles.product}
             key={productId}>
             <Image
@@ -68,6 +72,7 @@ const Product = () => {
               <p className={styles.heart}>{timeAgo(createdTime)}</p>
             </div>
             <div className={styles.like}>
+              <Icon>star</Icon>
               <p>{heart}</p>
             </div>
           </li>

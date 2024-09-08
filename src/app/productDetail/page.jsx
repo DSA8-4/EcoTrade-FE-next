@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 const ProductDetail = () => {
   return (
@@ -30,15 +30,22 @@ const ProductDetail = () => {
           </ul>
         </nav>
         <div className="search">
-          <input type="text" placeholder="상품명 검색" />
+          <input
+            type="text"
+            placeholder="상품명 검색"
+          />
         </div>
         <div className="user">
           <button className="chat-button">채팅하기</button>
-          <Link className="login-link" href="login">
+          <Link
+            className="login-link"
+            href="login">
             로그인
           </Link>
           <button className="logout-link">로그아웃</button>
-          <Link className="register-link" href="register">
+          <Link
+            className="register-link"
+            href="register">
             회원가입
           </Link>
         </div>
@@ -94,9 +101,8 @@ const ProductDetail = () => {
             <div className="product-seconddetails"></div>
 
             <p className="product-description">
-              상품에 대한 상세 설명 공간입니다. 여기서 추가적인 상품 정보를
-              입력할 수 있습니다. 예를 들어, 크기, 색상, 사용 여부 등의 정보가
-              포함될 수 있습니다.
+              상품에 대한 상세 설명 공간입니다. 여기서 추가적인 상품 정보를 입력할 수 있습니다. 예를
+              들어, 크기, 색상, 사용 여부 등의 정보가 포함될 수 있습니다.
             </p>
           </div>
           <div className="button-group">

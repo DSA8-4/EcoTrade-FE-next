@@ -5,13 +5,13 @@
   padding: 40px 20px;
   color: white;
   position: relative;
-  background-image: url("/images/EcoPoint.PNG");
+  background-image: url('/images/EcoPoint.PNG');
   background-size: cover;
   background-position: center;
 }
 
 .container::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -27,7 +27,7 @@
   background: white;
   text-decoration: none;
   text-align: center;
-  position: fixed;
+
   width: 100%;
 }
 

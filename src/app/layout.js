@@ -1,22 +1,22 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
-import Link from "next/link";
-import "material-icons/iconfont/material-icons.css";
-import UserBar from "@/components/UserBar";
-import { AuthProvider } from "@/context/AuthContext";
+import UserBar from '@/components/UserBar';
+import { AuthProvider } from '@/context/AuthContext';
+import 'material-icons/iconfont/material-icons.css';
+import { Inter } from 'next/font/google';
+import Link from 'next/link';
+import './globals.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: "EcoTrade",
-  description: "Used product save environment",
+  title: 'EcoTrade',
+  description: 'Used product save environment',
 };
 const navItems = [
-  { name: "상품목록", link: "/product" },
-  { name: "인기상품", link: "/popular" },
-  { name: "Eco포인트란?", link: "/EcoPoint" },
+  { name: '상품목록', link: '/product' },
+  { name: '인기상품', link: '/popular' },
+  { name: 'Eco포인트란?', link: '/EcoPoint' },
 ];
-export default function RootLayout({ children }) {
+const RootLayout = ({ children }) => {
   return (
     <html>
       <body className={inter.className}>
@@ -28,14 +28,19 @@ export default function RootLayout({ children }) {
             <nav className="main-nav">
               <ul>
                 {navItems.map(({ name, link }) => (
-                  <li key={name} className="nav-item">
+                  <li
+                    key={name}
+                    className="nav-item">
                     <Link href={link}>{name}</Link>
                   </li>
                 ))}
               </ul>
             </nav>
             <div className="search">
-              <input type="text" placeholder="상품명 검색" />
+              <input
+                type="text"
+                placeholder="상품명 검색"
+              />
             </div>
             <UserBar />
           </header>
@@ -45,4 +50,5 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
-}
+};
+export default RootLayout;

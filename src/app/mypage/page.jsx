@@ -1,13 +1,14 @@
-"use client";
-import styles from "./mypage.module.css";
-import Link from "next/link";
-import { useEffect } from "react";
+'use client';
+
+import { useEffect } from 'react';
+import Link from 'next/link';
+import styles from './mypage.module.css';
 
 const MyPage = () => {
   useEffect(() => {
     fetch(`http://localhost:8090/members/mypage`, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },
     })
       .then((response) => {
@@ -20,7 +21,7 @@ const MyPage = () => {
         console.log(data);
       })
       .catch((error) => {
-        console.error("Error fetching products:", error);
+        console.error('Error fetching products:', error);
       });
   }, []);
   return (
@@ -29,9 +30,7 @@ const MyPage = () => {
 
       <div className={styles.infoBox}>
         <Link href="/mypage/history">
-          <button
-            className={`${styles.button} ${styles.transactionHistoryButton}`}
-          >
+          <button className={`${styles.button} ${styles.transactionHistoryButton}`}>
             거래내역
           </button>
         </Link>
@@ -63,11 +62,11 @@ const MyPage = () => {
         </div>
       </div>
 
-      <div className={styles.infoBox} id="updatePassword">
+      <div
+        className={styles.infoBox}
+        id="updatePassword">
         <strong>비밀번호 수정</strong>
-        <div
-          className={`${styles.inlineContainer} ${styles.passwordFieldContainer}`}
-        >
+        <div className={`${styles.inlineContainer} ${styles.passwordFieldContainer}`}>
           <label htmlFor="currentPassword">현재 비밀번호</label>
           <input
             type="password"
@@ -76,9 +75,7 @@ const MyPage = () => {
             className={styles.smallInputField}
           />
         </div>
-        <div
-          className={`${styles.inlineContainer} ${styles.passwordFieldContainer}`}
-        >
+        <div className={`${styles.inlineContainer} ${styles.passwordFieldContainer}`}>
           <label htmlFor="newPassword">새 비밀번호</label>
           <input
             type="password"
@@ -96,21 +93,17 @@ const MyPage = () => {
             className={styles.smallInputField}
           />
         </div>
-        <button className={styles.button} id={styles.updatePasswordButton}>
+        <button
+          className={styles.button}
+          id={styles.updatePasswordButton}>
           비밀번호 수정
         </button>
       </div>
 
       <div className={styles.infoBox}>
-        <button className={`${styles.button} ${styles.editProfileButton}`}>
-          회원 정보 수정
-        </button>
-        <button className={`${styles.button} ${styles.saveProfileButton}`}>
-          저장
-        </button>
-        <button className={`${styles.button} ${styles.cancelProfileButton}`}>
-          취소
-        </button>
+        <button className={`${styles.button} ${styles.editProfileButton}`}>회원 정보 수정</button>
+        <button className={`${styles.button} ${styles.saveProfileButton}`}>저장</button>
+        <button className={`${styles.button} ${styles.cancelProfileButton}`}>취소</button>
       </div>
 
       <div className={styles.infoBox}>
@@ -118,9 +111,7 @@ const MyPage = () => {
       </div>
 
       <div className={styles.deleteAccountContainer}>
-        <button className={`${styles.button} ${styles.deleteAccountButton}`}>
-          회원탈퇴
-        </button>
+        <button className={`${styles.button} ${styles.deleteAccountButton}`}>회원탈퇴</button>
       </div>
     </div>
   );

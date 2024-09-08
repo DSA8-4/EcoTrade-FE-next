@@ -1,19 +1,18 @@
-// src/app/login.jsx
+'use client';
 
-"use client";
-import Link from "next/link";
-import styles from "../auth.module.css";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useContext } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import { useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import styles from '../auth.module.css';
 
 const Login = () => {
   const router = useRouter();
   const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
-    member_id: "",
-    password: "",
+    member_id: '',
+    password: '',
   });
 
   const handleChange = (e) => {
@@ -26,22 +25,22 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8090/members/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('http://localhost:8090/members/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok');
       }
 
       const userData = await response.json();
       login(userData); // Update the global state with user data
-      router.push("/");
+      router.push('/');
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("아이디 또는 비밀번호가 일치하지 않습니다");
+      console.error('Error submitting form:', error);
+      alert('아이디 또는 비밀번호가 일치하지 않습니다');
     }
   };
 
@@ -49,7 +48,9 @@ const Login = () => {
     <div className={styles.container}>
       <div className={styles.loginContainer}>
         <h2>로그인</h2>
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form
+          onSubmit={handleSubmit}
+          className={styles.form}>
           <input
             type="text"
             name="member_id"
@@ -67,7 +68,9 @@ const Login = () => {
             className={styles.input}
             onChange={handleChange}
           />
-          <button type="submit" className={styles.button}>
+          <button
+            type="submit"
+            className={styles.button}>
             로그인
           </button>
         </form>

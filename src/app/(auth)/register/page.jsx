@@ -1,17 +1,18 @@
-"use client";
-import Link from "next/link";
-import styles from "../auth.module.css";
-import { useState } from "react";
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import styles from '../auth.module.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    member_id: "",
-    password: "",
-    name: "",
-    email: "",
+    member_id: '',
+    password: '',
+    name: '',
+    email: '',
   });
 
-  const [checkedPW, setCheckedPW] = useState("");
+  const [checkedPW, setCheckedPW] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -27,25 +28,25 @@ const Register = () => {
     e.preventDefault();
 
     if (checkedPW !== formData.password) {
-      alert("비밀번호가 다릅니다.");
+      alert('비밀번호가 다릅니다.');
       return;
     }
     try {
-      const response = await fetch("http://localhost:8090/members/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('http://localhost:8090/members/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      alert(data.message || "Form submitted successfully!");
+      alert(data.message || 'Form submitted successfully!');
       console.log(data);
     } catch (error) {
-      console.error("Error submitting form:", error);
-      setResponseMessage("There was an error submitting the form.");
+      console.error('Error submitting form:', error);
+      alert('로그인 문제 발생');
     }
   };
 
@@ -53,7 +54,9 @@ const Register = () => {
     <div className={styles.container}>
       <div className={styles.loginContainer}>
         <h2>회원가입</h2>
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form
+          onSubmit={handleSubmit}
+          className={styles.form}>
           <input
             type="text"
             name="member_id"
@@ -96,7 +99,9 @@ const Register = () => {
             onChange={handleChange}
             className={styles.input}
           />
-          <button type="submit" className={styles.button}>
+          <button
+            type="submit"
+            className={styles.button}>
             완료
           </button>
         </form>

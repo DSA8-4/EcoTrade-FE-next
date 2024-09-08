@@ -8,13 +8,15 @@
 }
 .productList {
   display: grid;
-  grid-template-rows: 240px 240px 240px;
-  grid-template-columns: 200px 200px 200px 200px;
+  width: 60%;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 .product {
   display: flex;
   flex-direction: column;
   list-style: none;
+  text-decoration: none;
   border: 1px solid #ddd;
   border-radius: 8px;
   margin: 8px;

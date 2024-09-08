@@ -1,4 +1,5 @@
-import styles from "./EcoPoint.module.css";
+import Image from 'next/image';
+import styles from './EcoPoint.module.css';
 
 const EcoPoint = () => {
   return (
@@ -9,9 +10,11 @@ const EcoPoint = () => {
       </p>
       <div className={styles.cardsContainer}>
         <div className={styles.card}>
-          <img
+          <Image
             src="/images/EcoPoint탄소절감아이콘.png"
             alt="탄소 배출 절감 아이콘"
+            width={100}
+            height={100}
             className={styles.cardImage}
           />
           <h2 className={styles.cardTitle}>탄소 배출 절감</h2>
@@ -20,26 +23,26 @@ const EcoPoint = () => {
           </p>
         </div>
         <div className={styles.card}>
-          <img
+          <Image
             src="/images/EcoPoint나무심기아이콘.png"
             alt="나무 심기 아이콘"
+            width={100}
+            height={100}
             className={styles.cardImage}
           />
           <h2 className={styles.cardTitle}>나무 심기 기부</h2>
-          <p className={styles.cardText}>
-            포인트를 모아 나무 심기 프로젝트에 기부할 수 있습니다.
-          </p>
+          <p className={styles.cardText}>포인트를 모아 나무 심기 프로젝트에 기부할 수 있습니다.</p>
         </div>
         <div className={styles.card}>
-          <img
+          <Image
             src="/images/EcoPoint친환경상품구매아이콘.png"
             alt="친환경 제품 구매 아이콘"
+            width={100}
+            height={100}
             className={styles.cardImage}
           />
           <h2 className={styles.cardTitle}>친환경 제품 구매</h2>
-          <p className={styles.cardText}>
-            포인트를 사용하여 친환경 제품을 구매하세요.
-          </p>
+          <p className={styles.cardText}>포인트를 사용하여 친환경 제품을 구매하세요.</p>
         </div>
       </div>
     </div>
