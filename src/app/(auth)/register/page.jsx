@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import styles from '../auth.module.css';
+import { useRouter } from 'next/navigation';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const Register = () => {
   });
 
   const [checkedPW, setCheckedPW] = useState('');
+  const router = useRouter();
 
   const handleChange = (e) => {
     setFormData({
@@ -42,8 +44,8 @@ const Register = () => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      alert(data.message || 'Form submitted successfully!');
-      console.log(data);
+      alert(data.message || '회원가입 완료!');
+      router.replace("/")
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('로그인 문제 발생');
