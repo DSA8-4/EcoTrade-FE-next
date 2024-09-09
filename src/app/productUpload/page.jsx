@@ -117,51 +117,54 @@ const ProductUpload = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.h1}>상품 등록</h1>
-      <button onClick={() => console.log(formData)}>dfd</button>
       <form
         onSubmit={handleSubmit}
         className={styles.productForm}>
-        <label
-          className={styles.label}
-          htmlFor="title">
-          상품명
-        </label>
-        <input
-          onChange={handleChange}
-          type="text"
-          className={styles.input}
-          name="title"
-          required
-        />
-
-        <label
-          className={styles.label}
-          htmlFor="price">
-          가격
-        </label>
-        <input
-          onChange={handleChange}
-          type="number"
-          className={styles.input}
-          name="price"
-          required
-        />
-
-        <label
-          className={styles.label}
-          htmlFor="contents">
-          상품 설명
-        </label>
-        <textarea
-          className={styles.contents}
-          name="contents"
-          required
-          onChange={handleChange}></textarea>
-        <div className={styles.categorySelector}>
+        <div className={styles.inlined}>
+          <label
+            className={styles.label}
+            htmlFor="title">
+            상품명
+          </label>
+          <input
+            onChange={handleChange}
+            type="text"
+            className={styles.input}
+            name="title"
+            required
+          />
+        </div>
+        <div className={styles.inlined}>
+          <label
+            className={styles.label}
+            htmlFor="price">
+            가격
+          </label>
+          <input
+            onChange={handleChange}
+            type="number"
+            className={styles.input}
+            name="price"
+            required
+          />
+        </div>
+        <div className={styles.inlined}>
+          <label
+            className={styles.label}
+            htmlFor="contents">
+            설명
+          </label>
+          <textarea
+            className={styles.contents}
+            name="contents"
+            required
+            onChange={handleChange}></textarea>
+        </div>
+        <div className={styles.inlined}>
           <label
             htmlFor="category"
             className={styles.label}>
-            카테고리 선택
+            카테고리
           </label>
           <select
             name="category"
@@ -176,21 +179,22 @@ const ProductUpload = () => {
             ))}
           </select>
         </div>
-        <label
-          className={styles.label}
-          htmlFor="files">
-          상품 이미지
-        </label>
+        <div className={styles.inlined}>
+          <label
+            className={styles.label}
+            htmlFor="files">
+            상품 이미지
+          </label>
 
-        <input
-          type="file"
-          className={styles.input}
-          name="images"
-          multiple
-          accept="image/*"
-          onChange={changeImage}
-        />
-
+          <input
+            type="file"
+            className={styles.input}
+            name="images"
+            multiple
+            accept="image/*"
+            onChange={changeImage}
+          />
+        </div>
         {formData.productImages.length === 0 ? (
           <Icon size={'160px'}>image_search</Icon>
         ) : (
