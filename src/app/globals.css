@@ -14,12 +14,13 @@ body {
 }
 
 .header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 13px;
   display: flex;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .user-info {
