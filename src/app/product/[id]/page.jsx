@@ -5,6 +5,7 @@ import Icon from '@/components/Icon';
 import { AuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
 import styles from './productDetail.module.css';
+import { useRouter } from 'next/navigation';
 
 const ProductDetail = ({ params: { id } }) => {
   const [product, setProduct] = useState({});
@@ -12,6 +13,7 @@ const ProductDetail = ({ params: { id } }) => {
   const [localHeart, setLocalHeart] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const { user } = useContext(AuthContext);
+  const router = useRouter();
 
   useEffect(() => {
     fetchProductDetails();
@@ -139,7 +141,7 @@ const ProductDetail = ({ params: { id } }) => {
             </span>
             <span>{localHeart}</span>
           </button>
-          <button className={`${styles.button} ${styles.contactButton}`}>채팅하기</button>
+          <button onClick={() => router.push(`/chat/${id}`)} className={`${styles.button} ${styles.contactButton}`}>채팅하기</button>
           <button className={`${styles.button} ${styles.buyButton}`}>바로구매</button>
         </div>
       </div>

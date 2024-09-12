@@ -17,7 +17,17 @@ const Chat = ({ params: { id } }) => {
       },
     });
 
-    // fetch(`http://localhost:8090/messages/${id}`);
+    fetch(`http://localhost:8090/chat/rooms/createRoom`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+       },
+      body: JSON.stringify({
+        member_id: sessionStorage.getItem("member_id"),
+        id,
+      }),
+    }).then(data => console.log(data));
     stomp.current.activate();
   }, []);
 
@@ -28,7 +38,7 @@ const Chat = ({ params: { id } }) => {
       <div className={styles.chatBox}></div>
       <div className={styles.messageInput}>
         <div className={styles.name}>
-          {typeof window !== 'undefined' ? sessionStorage.getItem('name') : ''}
+          {/* {typeof window !== 'undefined' ? sessionStorage.getItem('name') : ''} */}
         </div>
         <input
           type="text"

@@ -1,10 +1,22 @@
+.user {
+  display: flex;
+  width: 20%;
+}
+
 .loggedIn {
   display: flex;
+  width: 100%;
+  justify-content: space-between;
+  
+}
+
+.login {
+  margin-right: 16px;
 }
 
 .logout {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width: 100%;
 }
 
