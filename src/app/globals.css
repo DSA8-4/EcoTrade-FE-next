@@ -14,12 +14,13 @@ body {
 }
 
 .header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 13px;
   display: flex;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .user-info {
@@ -51,7 +52,7 @@ body {
 }
 
 .search input {
-  padding: 0.9rem 45px;
+  padding: 8px 16px;
   background-color: #e9ecef;
   border: none;
   border-radius: 0.6rem;
@@ -103,15 +104,13 @@ body {
 
 .main-body {
   display: flex;
+  position: relative;
   width: 100%;
   height: 100%;
   background-image: url(/images/Ecobackground.jpg);
   background-size: cover;
   background-position: center;
-  /* align-items: center;
-  justify-content: center; */
   text-align: center;
-  position: relative;
 }
 
 .main-body::before {

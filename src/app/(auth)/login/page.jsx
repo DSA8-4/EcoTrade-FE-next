@@ -36,7 +36,7 @@ const Login = () => {
       }
 
       const userData = await response.json();
-      login(userData); // Update the global state with user data
+      login(userData);
       router.push('/');
     } catch (error) {
       console.error('Error submitting form:', error);

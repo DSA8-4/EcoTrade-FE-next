@@ -18,7 +18,7 @@ const navItems = [
 ];
 const RootLayout = ({ children }) => {
   return (
-    <html>
+    <html lang='ko'>
       <body className={inter.className}>
         <AuthProvider>
           <header className="header-content">
