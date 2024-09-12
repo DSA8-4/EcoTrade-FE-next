@@ -1,4 +1,4 @@
-const Icon = ({ size, color, children }) => {
+const Icon = ({ size, color, shape, children }) => {
   const iconStyle = {
     fontSize: size === undefined ? '24px' : size,
     color: color === undefined ? '#000000' : color,
@@ -6,7 +6,7 @@ const Icon = ({ size, color, children }) => {
 
   return (
     <i
-      className="material-icons-outlined"
+      className={`material-icons-${shape === undefined ? 'outlined' : shape}`}
       style={iconStyle}>
       {children}
     </i>

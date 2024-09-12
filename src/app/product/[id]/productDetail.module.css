@@ -1,47 +1,72 @@
 .productContainer {
   display: flex;
   position: relative;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
-  height: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 20px;
   background-color: white;
   border: 1px solid #ddd;
-  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.productImage {
-  width: 60%;
-  background-color: #ddd;
+.productGallery {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainImage {
+  width: 100%;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
+  /* background-color: #f8f8f8; */
+  margin-bottom: 10px;
 }
 
-.productImage img {
+.mainImage img {
   max-width: 100%;
-  max-height: 300px;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.thumbnailContainer {
+  display: flex;
+  justify-content: flex-start;
+  /* overflow-x: auto; 스크롤*/
+  gap: 10px;
+}
+
+.thumbnail {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.thumbnail.active {
+  border-color: #4caf50;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .productInfo {
-  padding: 20px;
   width: 50%;
-}
-
-.productContents {
-  position: relative;
-  width: 90px;
-  color: rgb(68, 56, 56);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 150%;
+  padding: 20px;
 }
 
 .productTitle {
   font-size: 24px;
-  margin: 0;
+  margin: 0 0 15px 0;
 }
 
 .productPrice {
@@ -56,29 +81,35 @@
   padding-top: 10px;
 }
 
-.productSecondDetails {
-  border-top: 1px solid #ddd;
-  margin-top: 20px;
-  padding-top: 10px;
+.productContents {
+  color: rgb(68, 56, 56);
+  font-size: 14px;
+  line-height: 150%;
 }
 
-.productDetails h3 {
-  margin: 0 0 10px 0;
+.productContents>div {
+  margin-bottom: 5px;
 }
 
 .productDescription {
+  margin-top: 20px;
   padding: 10px 0;
+  border-top: 1px solid #ddd;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
 .button {
-  padding: 23px;
+  padding: 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 10px;
   font-weight: 700;
   width: 30%;
-  height: 50%;
 }
 
 .favoriteButton {
@@ -86,17 +117,9 @@
   color: #333;
 }
 
-.favoriteButton:hover {
-  background-color: #c6bdbd;
-}
-
 .contactButton {
   background-color: #4caf50;
   color: white;
-}
-
-.contactButton:hover {
-  background-color: #45a049;
 }
 
 .buyButton {
@@ -104,82 +127,18 @@
   color: white;
 }
 
-.buyButton:hover {
-  background-color: #b34f44;
+.button:hover {
+  opacity: 0.9;
 }
 
-.mainHeader {
-  background-color: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .productContainer {
+    flex-direction: column;
+  }
 
-.headerContent {
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  margin-right: 2.5rem;
-}
-
-.mainNav ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-}
-
-.mainNav li {
-  margin-right: 20px;
-}
-
-.mainNav a {
-  text-decoration: none;
-  color: #4d4d4d;
-  font-weight: bold;
-}
-
-.search input {
-  padding: 0.9rem 25px;
-  background-color: #e9ecef;
-  border: none;
-  border-radius: 0.6rem;
-  margin-right: 8px;
-}
-
-.chatButton {
-  padding: 0.5rem 20px;
-  background-color: #55514e95;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  margin-right: -1rem;
-  cursor: pointer;
-}
-
-.loginLink,
-.logoutLink {
-  text-decoration: none;
-  color: #4b4848;
-  font-weight: bold;
-  margin-left: 45px;
-}
-
-.logoutLink {
-  margin-left: 40px;
-  color: #4b4848;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.registerLink {
-  text-decoration: none;
-  color: #4b4848;
-  font-weight: bold;
-  margin-left: 20px;
+  .productGallery,
+  .productInfo {
+    width: 100%;
+  }
 }
