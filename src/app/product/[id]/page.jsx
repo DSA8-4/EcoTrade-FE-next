@@ -4,14 +4,15 @@ import { useContext, useEffect, useState } from 'react';
 import Icon from '@/components/Icon';
 import { AuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
-import styles from './productDetail.module.css';
 import { useRouter } from 'next/navigation';
+import styles from './productDetail.module.css';
 
 const ProductDetail = ({ params: { id } }) => {
   const [product, setProduct] = useState({});
   const [selectedImage, setSelectedImage] = useState(0);
   const [localHeart, setLocalHeart] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [chatroomLoading, setChatRoomLoading] = useState(false);
   const { user } = useContext(AuthContext);
   const router = useRouter();
 
@@ -54,13 +55,48 @@ const ProductDetail = ({ params: { id } }) => {
     console.log(`좋아요 수: ${localHeart + (isFavorite ? -1 : 1)}`);
   };
 
+  const handleChatRoom = () => {
+    setChatRoomLoading(true);
+    fetch(`http://localhost:8090/chat/rooms/createRoom`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({
+        memberId: sessionStorage.getItem('member_id'),
+        productId: id,
+      }),
+    })
+      .then(async (response) => {
+        if (response.ok) {
+          return response.json();
+        } else if (response.status === 401) {
+          throw new Error('Unauthorized. Please log in again.');
+        } else if (response.status === 404) {
+          throw new Error('Product not found.');
+        } else {
+          throw new Error('Unexpected error occurred.');
+        }
+      })
+      .then((chatRoom) => {
+        setChatRoomLoading(false);
+        if (chatRoom) {
+          router.push(`/chat/${chatRoom.id}`);
+        }
+      })
+      .catch((error) => {
+        console.error('Error creating room:', error);
+      });
+  };
+
   return (
     <div className={styles.productContainer}>
       <div className={styles.productGallery}>
         <div className={styles.mainImage}>
-          {product.productImages && product.productImages.length > 0 && (
+          {product.imageUrls && product.imageUrls.length > 0 && (
             <Image
-              src={product.productImages[selectedImage].url}
+              src={product.imageUrls[selectedImage]}
               width={500}
               height={450}
               alt="상품 이미지"
@@ -68,14 +104,14 @@ const ProductDetail = ({ params: { id } }) => {
           )}
         </div>
         <div className={styles.thumbnailContainer}>
-          {product.productImages &&
-            product.productImages.map((image, index) => (
+          {product.imageUrls &&
+            product.imageUrls.map((image, index) => (
               <div
                 key={index}
                 className={`${styles.thumbnail} ${index === selectedImage ? styles.active : ''}`}
                 onClick={() => handleThumbnailClick(index)}>
                 <Image
-                  src={image.url}
+                  src={image}
                   width={100}
                   height={100}
                   alt={`상품 썸네일 ${index}`}
@@ -103,7 +139,7 @@ const ProductDetail = ({ params: { id } }) => {
             </div>
             <div className={styles.productTime}>
               <span>·</span>
-              <span>작성시간 : {new Date(product.created_time).toLocaleString()}</span>
+              <span>작성시간 : {new Date(product.createdTime).toLocaleString()}</span>
             </div>
             <div className={styles.productCategory}>
               <span>·</span>
@@ -136,12 +172,17 @@ const ProductDetail = ({ params: { id } }) => {
                   size={'13px'}>
                   favorite_border
                 </Icon>
-              )}{' '}
-              찜{' '}
+              )}
+              찜
             </span>
             <span>{localHeart}</span>
           </button>
-          <button onClick={() => router.push(`/chat/${id}`)} className={`${styles.button} ${styles.contactButton}`}>채팅하기</button>
+          <button
+            disabled={chatroomLoading}
+            onClick={handleChatRoom}
+            className={`${styles.button} ${styles.contactButton}`}>
+            {chatroomLoading ? '채팅방 생성중' : '채팅하기'}
+          </button>
           <button className={`${styles.button} ${styles.buyButton}`}>바로구매</button>
         </div>
       </div>

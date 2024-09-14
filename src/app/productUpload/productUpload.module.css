@@ -4,13 +4,13 @@
   position: relative;
   width: 100%;
   max-width: 600px;
+  max-height: 1000px;
   margin: 24px auto;
   padding: 16px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
-
 
 .h1 {
   text-align: center;
@@ -22,11 +22,6 @@
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
-}
-.label {
-  display: block;
-  margin-top: 10px;
-  font-weight: bold;
 }
 
 .input,
@@ -46,7 +41,7 @@
   display: flex;
   margin-top: 4px;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
 }
 
 .select {

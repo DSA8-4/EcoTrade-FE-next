@@ -17,19 +17,12 @@ const Chat = ({ params: { id } }) => {
       },
     });
 
-    fetch(`http://localhost:8090/chat/rooms/createRoom`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-       },
-      body: JSON.stringify({
-        member_id: sessionStorage.getItem("member_id"),
-        id,
-      }),
-    }).then(data => console.log(data));
     stomp.current.activate();
-  }, []);
+
+    return () => {
+      if (stomp.current) stomp.current.deactivate();
+    };
+  }, [id]);
 
   return (
     <div className={styles.container}>

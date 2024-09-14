@@ -13,12 +13,12 @@ export const metadata = {
 };
 const navItems = [
   { name: '상품목록', link: '/product' },
-  { name: '인기상품', link: '/popular' },
+  { name: '채팅목록', link: '/chat' },
   { name: 'Eco포인트란?', link: '/EcoPoint' },
 ];
 const RootLayout = ({ children }) => {
   return (
-    <html lang='ko'>
+    <html lang="ko">
       <body className={inter.className}>
         <AuthProvider>
           <header className="header-content">
