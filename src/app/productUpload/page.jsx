@@ -72,6 +72,7 @@ const ProductUpload = () => {
       const data = await response.json();
       console.log('Product successfully registered:', data);
       alert('Product successfully registered.');
+      router.push('/product');
     } catch (error) {
       console.error('Failed to register product:', error);
       alert('Failed to register product. Please try again.');
