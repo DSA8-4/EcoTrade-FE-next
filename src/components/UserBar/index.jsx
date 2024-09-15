@@ -25,8 +25,8 @@ const UserBar = () => {
             <Image
               onClick={() => router.push('mypage')}
               className="profilePicture"
-              width={40}
-              height={40}
+              width={25}
+              height={25}
               src={'/images/profile-icon.png'}
               alt="프로필"
               loading="eager"

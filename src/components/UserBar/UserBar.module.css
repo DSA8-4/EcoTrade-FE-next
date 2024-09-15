@@ -1,25 +1,27 @@
-.user {
-  display: flex;
-  width: 20%;
-}
-
+.logoutButton,
 .loggedIn {
   display: flex;
-  width: 100%;
-  justify-content: space-between;
-  
+  align-items: center;
 }
 
-.login {
-  margin-right: 16px;
-}
-
-.logout {
-  display: flex;
-  /* justify-content: space-between; */
-  width: 100%;
-}
-
-.logoutButton {
+.login,
+.register,
+.logoutButton,
+.productUpload {
+  text-decoration: none;
+  color: #4b4848;
+  font-weight: bold;
+  padding: 0 1rem;
   cursor: pointer;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  font-size: inherit;
+}
+
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
