@@ -6,13 +6,14 @@ import styles from './chat.module.css';
 const Chat = () => {
   const [roomName, setRoomName] = useState('');
   useEffect(() => {
-    fetch('http://localhost:8090/chat/rooms')
+    fetch('http://localhost:8090/chat/rooms/list', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
       .then((response) => response.json())
       .then((roomList) => {
         console.log(roomList);
-        roomList.forEach((room) => {
-          console.log(room);
-        });
       })
       .catch((error) => {
         console.error('Error fetching rooms:', error);
