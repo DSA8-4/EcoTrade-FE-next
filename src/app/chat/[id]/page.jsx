@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import styles from '../chat.module.css';
+import styles from './chatRoom.module.css';
 
 const Chat = ({ params: { id } }) => {
   const [roomName, setRoomName] = useState('');
@@ -30,8 +30,9 @@ const Chat = ({ params: { id } }) => {
       webSocketFactory: () => new SockJS('http://localhost:8090/chat-websocket'),
       onConnect: () => {
         console.log('========== Connected ==========');
-        stomp.current.subscribe(`/sub/chat/chatroom/${id}`, (message) => {
-          const chatRoomData = JSON.parse(message.body);
+        stomp.current.subscribe(`/sub/chatroom/${id}`, ({body}) => {
+          const message = JSON.parse(body);
+          setMessages(prev => [...prev, message])
           console.log('Received message:', chatRoomData);
         });
       },
@@ -62,19 +63,35 @@ const Chat = ({ params: { id } }) => {
       destination: `/pub/chat/send/${id}`,
       body: JSON.stringify({
         content: newMessage,
-        sender: sessionStorage.getItem('member_id'),
+        sender: sessionStorage.getItem('name'),
       }),
     });
+    
+  };
+
+  const handleNewLine = (e) => {
+    if (e.nativeEvent.isComposing) return;
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+      e.target.value = ''
+    }
   };
 
   return (
     <div className={styles.container}>
       <h2>Chat Room</h2>
-      <div className={styles.roomList}></div>
-      <div className={styles.chatBox}></div>
+      <div className={styles.chatBox}>
+        {messages && messages.map(message => {
+          return <li className={message.sender === sessionStorage.getItem('name') ? styles.me : styles.other} key={message.id}>
+            <p className={message.sender === sessionStorage.getItem('name') ? styles.myMessage : styles.otherMessage}>{message.content}</p>
+            </li>
+        })}
+      </div>
       <div className={styles.messageInput}>
-        <div className={styles.name}>{user}</div>
+      
         <input
+          onKeyDown={handleNewLine}
           onChange={(e) => setNewMessage(e.target.value)}
           type="text"
           placeholder="Type a message..."

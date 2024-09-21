@@ -41,18 +41,6 @@ const Chat = () => {
   return (
     <div className={styles.container}>
       <h2>Chat Room</h2>
-      <div className={styles.roomCreation}>
-        <input
-          type="text"
-          placeholder="Room Name"
-          onChange={(e) => setRoomName(e.target.value)}
-        />
-        <button
-          className={styles.btn}
-          onClick={() => createRoom()}>
-          Create Room
-        </button>
-      </div>
       <div className={styles.roomList}></div>
     </div>
   );
