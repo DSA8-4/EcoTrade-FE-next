@@ -173,9 +173,8 @@ const ProductDetail = ({ params: { id } }) => {
                   favorite_border
                 </Icon>
               )}
-              찜
             </span>
-            <span>{localHeart}</span>
+            <span>찜 {localHeart}</span>
           </button>
           <button
             disabled={chatroomLoading}
