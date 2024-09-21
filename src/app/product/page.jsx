@@ -39,7 +39,7 @@ const Product = () => {
         console.error('Error fetching products:', error);
       });
   };
-
+  
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsDropdownOpen(false);
@@ -141,7 +141,7 @@ const Product = () => {
         </div>
       </div>
       <ul className={styles.productList}>
-        {productList.map(({ productId, title, price, heart, hit, imageUrls, createdTime }) => (
+        {productList.map(({ productId, title, price, heart, hit, imageUrls, createdTime, seller }) => (
           <li
             onClick={() => router.push(`/product/${productId}`)}
             className={styles.product}
@@ -172,7 +172,7 @@ const Product = () => {
                 </div>
               </div>
             </div>
-            {user && <button onClick={(e) => handleEdit(e, productId)}>수정</button>}
+            {seller && seller === sessionStorage.getItem("name") && <button onClick={(e) => handleEdit(e, productId)}>수정</button>}
           </li>
         ))}
       </ul>

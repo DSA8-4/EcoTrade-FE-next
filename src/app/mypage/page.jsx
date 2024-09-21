@@ -24,6 +24,7 @@ const MyPage = () => {
         console.error('Error fetching products:', error);
       });
   }, []);
+  
   return (
     <div className={styles.container}>
       <h1 className={styles.h1}></h1>

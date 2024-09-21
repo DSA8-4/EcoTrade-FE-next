@@ -6,6 +6,9 @@ import { AuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './productDetail.module.css';
+import { getStorage } from 'firebase/storage';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '@/utils/config';
 
 const ProductDetail = ({ params: { id } }) => {
   const [product, setProduct] = useState({});
@@ -29,6 +32,7 @@ const ProductDetail = ({ params: { id } }) => {
         return response.json();
       })
       .then((data) => {
+        console.log(data)
         setProduct(data);
         setLocalHeart(data.heart || 0);
         setIsFavorite(data.isFavoritedByUser);
@@ -90,6 +94,25 @@ const ProductDetail = ({ params: { id } }) => {
       });
   };
 
+  const handleEdit = () => {
+    router.push(`Edit/${product.productId}`)
+    console.log(product)
+  }
+
+  const handleDelete = async () => {
+    fetch(`http://localhost:8090/products/delete/${product.productId}`, {
+      method: 'DELETE',
+      headers: {Authorization: `Bearer ${sessionStorage.getItem('token')}`},
+    }).then(response => {
+      if(response.ok) {
+        alert("삭제가 완료되었습니다.")
+        router.replace("/product")
+      } else {
+        alert("삭제에 실패했습니다.")
+      }
+    })
+  }
+  
   return (
     <div className={styles.productContainer}>
       <div className={styles.productGallery}>
@@ -153,7 +176,7 @@ const ProductDetail = ({ params: { id } }) => {
             <span>{product.contents || '상세 설명이 없습니다.'}</span>
           </h4>
         </div>
-        <div className={styles.buttonGroup}>
+        {user && user !== product.seller ? <div className={styles.buttonGroup}>
           <button
             className={`${styles.button} ${styles.favoriteButton}`}
             onClick={handleFavoriteClick}
@@ -183,7 +206,10 @@ const ProductDetail = ({ params: { id } }) => {
             {chatroomLoading ? '채팅방 생성중' : '채팅하기'}
           </button>
           <button className={`${styles.button} ${styles.buyButton}`}>바로구매</button>
-        </div>
+        </div> : <div className={styles.buttonGroup2}>
+          <button onClick={handleEdit} className={styles.button}>수정하기</button>
+          <button onClick={handleDelete} className={`${styles.button} ${styles.buyButton}`}>삭제하기</button>
+          </div>}
       </div>
     </div>
   );
