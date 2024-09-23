@@ -8,93 +8,51 @@
   position: relative;
 }
 
-.h2 {
-  text-align: center;
-  color: #333;
-  padding: 20px 0;
-  margin: 0;
-  border-bottom: 1px solid #eee;
-}
-
-.btn {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  margin-left: 20px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: #45a049;
-}
-
-
-.message {
-  position: relative;
-  /* max-width: 35%; */
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  border-radius: 20px;
-  clear: both;
-}
-
-
-/* .message-input {
-  padding: 20px;
-  display: flex;
-  border-top: 1px solid #eee;
-}
-
-.message-input input {
-  flex-grow: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-right: 10px;
-} */
-
-
-
-.time {
-  font-size: 0.8em;
-  color: #888;
-  margin-left: 5px;
-}
-
-
 .chatBox {
   display: flex;
   flex-direction: column;
-  border: 1px solid #ddd;
   height: 400px;
   overflow-y: auto;
   padding: 20px;
   background-color: #f9f9f9;
-  margin-bottom: 16px;
-  border-radius: 4px;
 }
 
-.chatBox > li {
+.messageWrapper {
   display: flex;
-  list-style: none;
-
+  margin-bottom: 10px;
+  justify-content: flex-start;
 }
 
-.chatBox > li > p {
-  border: 2px solid #ddd;
-  border-radius: 4px;
-  padding: 4px;
+.messageContent {
+  display: flex;
+  max-width: 70%;
+  align-items: flex-end;
+  font-size: 0.75em;
+  color: #888;
+  margin-right: -13px;
+  white-space: nowrap;
+}
+
+.myMessage,
+.otherMessage {
+  padding: 10px;
+  border-radius: 12px;
+  word-wrap: break-word;
+  margin-left: -10px;
+  position: relative;
 }
 
 .myMessage {
-  background-color: #45a049;
+  background-color: #4caf50;
   color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
 }
 
 .otherMessage {
-  background-color: white;
+  background-color: #e0e0e0;
+  color: black;
+  border-bottom-left-radius: 0;
 }
 
 .me {
@@ -103,4 +61,44 @@
 
 .other {
   justify-content: flex-start;
+}
+
+.timestampRight {
+  margin-right: 5px;
+}
+
+.timestampLeft {
+  margin-left: 5px;
+}
+
+
+.messageInput {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #ffffff;
+}
+
+
+.messageInput input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 10px;
+  font-size: 1em;
+}
+
+.btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.btn:hover {
+  background-color: #45a049;
 }

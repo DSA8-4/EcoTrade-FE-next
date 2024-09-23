@@ -1,17 +1,18 @@
 'use client';
 
-import { useContext, useEffect, useRef, useState } from 'react';
-import { AuthContext } from '@/context/AuthContext';
+import { useEffect, useRef, useState } from 'react';
+//useContext
+// import { AuthContext } from '@/context/AuthContext';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import styles from './chatRoom.module.css';
 
-const Chat = ({ params: { id } }) => {
-  const [roomName, setRoomName] = useState('');
-  const [messages, setMessages] = useState();
-  const [newMessage, setNewMessage] = useState();
+const ChatRoom = ({ params: { id } }) => {
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
   const stomp = useRef(null);
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
+  const chatBoxRef = useRef(null);
 
   useEffect(() => {
     fetch(`http://localhost:8090/chat/rooms/${id}/messages`, {
@@ -22,18 +23,14 @@ const Chat = ({ params: { id } }) => {
       .then((response) => response.json())
       .then((chatMessages) => {
         setMessages(chatMessages);
-        if (chatMessages.length === 0) sessionStorage.setItem('delete', 'true');
-        else sessionStorage.setItem('delete', 'false');
       });
 
     stomp.current = new Client({
       webSocketFactory: () => new SockJS('http://localhost:8090/chat-websocket'),
       onConnect: () => {
-        console.log('========== Connected ==========');
-        stomp.current.subscribe(`/sub/chatroom/${id}`, ({body}) => {
+        stomp.current.subscribe(`/sub/chatroom/${id}`, ({ body }) => {
           const message = JSON.parse(body);
-          setMessages(prev => [...prev, message])
-          console.log('Received message:', chatRoomData);
+          setMessages((prev) => [...prev, message]);
         });
       },
     });
@@ -42,58 +39,88 @@ const Chat = ({ params: { id } }) => {
 
     return () => {
       if (stomp.current) stomp.current.deactivate();
-      if (sessionStorage.getItem('delete') === 'false') return;
-      fetch(`http://localhost:8090/chat/rooms/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-        },
-      })
-        .then((response) => {
-          if (response.ok) console.log('Chat room deleted successfully');
-          else if (response.status === 409) console.log('Chat room has messages, not deleted');
-        })
-        .catch((error) => console.error('Error deleting chat room:', error));
     };
   }, [id]);
 
-  const sendMessage = (e) => {
-    sessionStorage.setItem('delete', 'false');
-    stomp.current.publish({
-      destination: `/pub/chat/send/${id}`,
-      body: JSON.stringify({
-        content: newMessage,
-        sender: sessionStorage.getItem('name'),
-      }),
-    });
-    
+  useEffect(() => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const sendMessage = () => {
+    if (newMessage.trim()) {
+      stomp.current.publish({
+        destination: `/pub/chat/send/${id}`,
+        body: JSON.stringify({
+          content: newMessage,
+          sender: sessionStorage.getItem('name'),
+          timestamp: new Date().toISOString(),
+        }),
+      });
+      setNewMessage('');
+    }
   };
 
   const handleNewLine = (e) => {
-    if (e.nativeEvent.isComposing) return;
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
-      e.target.value = ''
     }
+  };
+
+  const formatTime = (timestamp) => {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const period = hours >= 12 ? '오후' : '오전';
+    const formattedHours = hours % 12 || 12;
+    const minutes = date.getMinutes();
+
+    return `${period} ${formattedHours}:${minutes.toString().padStart(2, '0')}`;
   };
 
   return (
     <div className={styles.container}>
       <h2>Chat Room</h2>
-      <div className={styles.chatBox}>
-        {messages && messages.map(message => {
-          return <li className={message.sender === sessionStorage.getItem('name') ? styles.me : styles.other} key={message.id}>
-            <p className={message.sender === sessionStorage.getItem('name') ? styles.myMessage : styles.otherMessage}>{message.content}</p>
-            </li>
-        })}
+      <div
+        className={styles.chatBox}
+        ref={chatBoxRef}>
+        {messages.map((message, index) => (
+          <div
+            className={`${styles.messageWrapper} ${
+              message.sender === sessionStorage.getItem('name') ? styles.me : styles.other
+            }`}
+            key={message.id || index}>
+            <div className={styles.messageContent}>
+              {/* {message.sender === sessionStorage.getItem('name') ? (
+                <span className={styles.timestampLeft}>{formatTime(message.timestamp)}</span> // 왼쪽 배치
+              ) : (
+                <span className={styles.timestampRight}>{formatTime(message.timestamp)}</span> // 오른쪽 배치
+              )} */}
+              {message.sender === sessionStorage.getItem('name') && (
+                <span className={styles.timestampRight}>{formatTime(message.timestamp)}</span>
+              )}
+              <p
+                className={
+                  message.sender === sessionStorage.getItem('name')
+                    ? styles.myMessage
+                    : styles.otherMessage
+                }>
+                {message.content}
+              </p>
+              {message.sender !== sessionStorage.getItem('name') && (
+                <span className={styles.timestampLeft}>{formatTime(message.timestamp)}</span>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
       <div className={styles.messageInput}>
-      
         <input
           onKeyDown={handleNewLine}
           onChange={(e) => setNewMessage(e.target.value)}
           type="text"
+          value={newMessage}
           placeholder="Type a message..."
         />
         <button
@@ -106,4 +133,4 @@ const Chat = ({ params: { id } }) => {
   );
 };
 
-export default Chat;
+export default ChatRoom;

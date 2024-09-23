@@ -1,10 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './chat.module.css';
 
 const Chat = () => {
-  const [roomName, setRoomName] = useState('');
+  const [chatRooms, setChatRooms] = useState([]);
+  const router = useRouter();
+
   useEffect(() => {
     fetch('http://localhost:8090/chat/rooms/list', {
       headers: {
@@ -13,35 +17,42 @@ const Chat = () => {
     })
       .then((response) => response.json())
       .then((roomList) => {
-        console.log(roomList);
+        const uniqueRooms = Array.from(new Map(roomList.map((room) => [room.id, room])).values());
+        setChatRooms(uniqueRooms);
       })
       .catch((error) => {
         console.error('Error fetching rooms:', error);
       });
   }, []);
 
-  const createRoom = async () => {
-    const response = await fetch('http://localhost:8090/chat/rooms/createRoom', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(roomName),
-    });
-    if (response.ok) {
-      const chatRoom = await response.json();
-      console.log('Chat room created:', chatRoom);
-    } else if (response.status === 409) {
-      console.log('Chat room already exists');
-    } else {
-      console.error('Failed to create chat room:', response.statusText);
-    }
+  const handleRoomClick = (id) => {
+    router.push(`/chat/${id}`);
   };
 
   return (
     <div className={styles.container}>
-      <h2>Chat Room</h2>
-      <div className={styles.roomList}></div>
+      <h2>Chat List</h2>
+      <div className={styles.roomList}>
+        {chatRooms.map((room, index) => (
+          <div
+            key={`${room.id}-${index}`}
+            className={styles.roomItem}
+            onClick={() => handleRoomClick(room.id)}>
+            <div className={styles.icon}>
+              <Image
+                src="/images/profile-icon.png"
+                alt="아이콘"
+                width={30}
+                height={30}
+              />
+            </div>
+            <div className={styles.text}>
+              <h3>{room.name}</h3>
+              <p>{room.lastMessage}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
