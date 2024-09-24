@@ -67,11 +67,10 @@ const ProductUpload = () => {
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
+      } else {
+        router.push('/product');
+        alert('Product successfully registered.');
       }
-
-      console.log('Product successfully registered:', response);
-      // alert('Product successfully registered.');
-      // router.push('/product');
     } catch (error) {
       console.error('Failed to register product:', error);
       alert('Failed to register product. Please try again.');
