@@ -19,6 +19,7 @@ const Chat = () => {
       .then((roomList) => {
         const uniqueRooms = Array.from(new Map(roomList.map((room) => [room.id, room])).values());
         setChatRooms(uniqueRooms);
+        console.log(roomList);
       })
       .catch((error) => {
         console.error('Error fetching rooms:', error);
@@ -48,7 +49,18 @@ const Chat = () => {
             </div>
             <div className={styles.text}>
               <h3>{room.name}</h3>
-              <p>{room.lastMessage}</p>
+              <div className={styles.messageWrapper}>
+                <p>{room.lastMessage}</p>
+                <span className={styles.date}>{new Date().toLocaleDateString()}</span>
+              </div>
+            </div>
+            <div className={styles.productImage}>
+              <Image
+                src={room.imageUrl}
+                alt="상품 이미지"
+                width={45}
+                height={45}
+              />
             </div>
           </div>
         ))}
