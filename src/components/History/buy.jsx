@@ -1,7 +1,18 @@
+import { useEffect } from 'react';
 import Icon from '@/components/Icon';
 import styles from './history.module.css';
 
 const Buy = () => {
+  useEffect(() => {
+    fetch(`http://localhost:8090/members/mypage/purchases}`, {
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }, []);
+
   return (
     <section className={styles.transactionSection}>
       <h2>

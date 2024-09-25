@@ -16,6 +16,11 @@ const navItems = [
   { name: '채팅목록', link: '/chat' },
   { name: 'Eco포인트란?', link: '/EcoPoint' },
 ];
+
+// const searchTest = () => {
+//   // http://localhost:8090/products/list?searchText=aaa
+// };
+
 const RootLayout = ({ children }) => {
   return (
     <html lang="ko">

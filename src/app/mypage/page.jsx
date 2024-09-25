@@ -1,10 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Icon from '@/components/Icon';
+import { firebaseConfig } from '@/utils/config';
+import { initializeApp } from 'firebase/app';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import Image from 'next/image';
 import Link from 'next/link';
 import styles from './mypage.module.css';
 
 const MyPage = () => {
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+
+  const imageInput = useRef(null);
   const [myInfo, setMyInfo] = useState({
     name: '',
     email: '',
@@ -38,9 +47,50 @@ const MyPage = () => {
     }).then((response) => console.log(response));
   };
 
+  const profileImageUpload = (fileItem) => {
+    const storageRef = ref(storage, 'images/' + fileItem.name);
+    const uploadTask = uploadBytesResumable(storageRef, fileItem);
+
+    uploadTask.on(
+      'state_changed',
+      () => {},
+      (error) => {
+        console.error('Upload failed:', error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log('File available at', url);
+        });
+      },
+    );
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.h1}>내 정보</h1>
+      <div
+        onClick={() => imageInput.current.click()}
+        className={styles.profileImageContainer}>
+        <Image
+          className={styles.profileImage}
+          width={70}
+          height={70}
+          src={'/images/profile-icon.png'}
+          alt="프로필"
+          loading="eager"
+        />
+        <div className={styles.profileImageEdit}>
+          <Icon>camera_alt</Icon>
+        </div>
+        <input
+          type="file"
+          style={{ display: 'none' }}
+          accept="image/*"
+          name="profile_img"
+          onChange={(e) => profileImageUpload(e.target.files[0])}
+          ref={imageInput}
+        />
+      </div>
       <div className={styles.infoBox}>
         <strong>Member ID: {myInfo && myInfo.member_id}</strong>
       </div>

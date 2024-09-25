@@ -27,7 +27,7 @@ const ProductDetail = ({ params: { id } }) => {
       .then((data) => {
         console.log(data);
         setProduct(data);
-        setLocalHeart(data.heart || 0);
+        setLocalHeart(data.heart);
         setIsFavorite(data.isFavoritedByUser);
       })
       .catch((error) => {
@@ -45,6 +45,12 @@ const ProductDetail = ({ params: { id } }) => {
       return;
     }
 
+    fetch(`http://localhost:8090/products/productLike/${id}`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
     setIsFavorite((prev) => !prev);
     setLocalHeart((prev) => (isFavorite ? prev - 1 : prev + 1));
 
@@ -199,7 +205,6 @@ const ProductDetail = ({ params: { id } }) => {
               className={`${styles.button} ${styles.contactButton}`}>
               {chatroomLoading ? '채팅방 생성중' : '채팅하기'}
             </button>
-            <button className={`${styles.button} ${styles.buyButton}`}>바로구매</button>
           </div>
         ) : (
           <div className={styles.buttonGroup2}>
@@ -212,6 +217,11 @@ const ProductDetail = ({ params: { id } }) => {
               onClick={handleDelete}
               className={`${styles.button} ${styles.buyButton}`}>
               삭제하기
+            </button>
+            <button
+              onClick={() => router.push(`/buyers/${id}`)}
+              className={`${styles.button} ${styles.selectBuyer}`}>
+              구매자 확정
             </button>
           </div>
         )}
