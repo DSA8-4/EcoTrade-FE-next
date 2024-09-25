@@ -17,10 +17,6 @@ const ProductDetail = ({ params: { id } }) => {
   const router = useRouter();
 
   useEffect(() => {
-    fetchProductDetails();
-  }, [id]);
-
-  const fetchProductDetails = () => {
     fetch(`http://localhost:8090/products/detail/${id}`)
       .then((response) => {
         if (!response.ok) {
@@ -29,6 +25,7 @@ const ProductDetail = ({ params: { id } }) => {
         return response.json();
       })
       .then((data) => {
+        console.log(data);
         setProduct(data);
         setLocalHeart(data.heart || 0);
         setIsFavorite(data.isFavoritedByUser);
@@ -36,7 +33,7 @@ const ProductDetail = ({ params: { id } }) => {
       .catch((error) => {
         console.error('Error fetching product:', error);
       });
-  };
+  }, [id]);
 
   const handleThumbnailClick = (index) => {
     setSelectedImage(index);
@@ -88,6 +85,25 @@ const ProductDetail = ({ params: { id } }) => {
       .catch((error) => {
         console.error('Error creating room:', error);
       });
+  };
+
+  const handleEdit = () => {
+    router.push(`Edit/${product.productId}`);
+    console.log(product);
+  };
+
+  const handleDelete = async () => {
+    fetch(`http://localhost:8090/products/delete/${product.productId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
+    }).then((response) => {
+      if (response.ok) {
+        alert('삭제가 완료되었습니다.');
+        router.replace('/product');
+      } else {
+        alert('삭제에 실패했습니다.');
+      }
+    });
   };
 
   return (
@@ -153,38 +169,52 @@ const ProductDetail = ({ params: { id } }) => {
             <span>{product.contents || '상세 설명이 없습니다.'}</span>
           </h4>
         </div>
-        <div className={styles.buttonGroup}>
-          <button
-            className={`${styles.button} ${styles.favoriteButton}`}
-            onClick={handleFavoriteClick}
-            disabled={!user}>
-            <span>
-              {isFavorite ? (
-                <Icon
-                  shape={'round'}
-                  size={'13px'}
-                  color={'red'}>
-                  favorite
-                </Icon>
-              ) : (
-                <Icon
-                  shape={'round'}
-                  size={'13px'}>
-                  favorite_border
-                </Icon>
-              )}
-              찜
-            </span>
-            <span>{localHeart}</span>
-          </button>
-          <button
-            disabled={chatroomLoading}
-            onClick={handleChatRoom}
-            className={`${styles.button} ${styles.contactButton}`}>
-            {chatroomLoading ? '채팅방 생성중' : '채팅하기'}
-          </button>
-          <button className={`${styles.button} ${styles.buyButton}`}>바로구매</button>
-        </div>
+        {user && user !== product.seller ? (
+          <div className={styles.buttonGroup}>
+            <button
+              className={`${styles.button} ${styles.favoriteButton}`}
+              onClick={handleFavoriteClick}
+              disabled={!user}>
+              <span>
+                {isFavorite ? (
+                  <Icon
+                    shape={'round'}
+                    size={'13px'}
+                    color={'red'}>
+                    favorite
+                  </Icon>
+                ) : (
+                  <Icon
+                    shape={'round'}
+                    size={'13px'}>
+                    favorite_border
+                  </Icon>
+                )}
+              </span>
+              <span>찜 {localHeart}</span>
+            </button>
+            <button
+              disabled={chatroomLoading}
+              onClick={handleChatRoom}
+              className={`${styles.button} ${styles.contactButton}`}>
+              {chatroomLoading ? '채팅방 생성중' : '채팅하기'}
+            </button>
+            <button className={`${styles.button} ${styles.buyButton}`}>바로구매</button>
+          </div>
+        ) : (
+          <div className={styles.buttonGroup2}>
+            <button
+              onClick={handleEdit}
+              className={styles.button}>
+              수정하기
+            </button>
+            <button
+              onClick={handleDelete}
+              className={`${styles.button} ${styles.buyButton}`}>
+              삭제하기
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

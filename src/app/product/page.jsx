@@ -1,16 +1,29 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Icon from '@/components/Icon';
+import { AuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './products.module.css';
 
 const Product = () => {
   const [productList, setProductList] = useState([]);
+  const [sortOption, setSortOption] = useState('oldest');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { user } = useContext(AuthContext);
   const router = useRouter();
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
+    fetchProducts();
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const fetchProducts = () => {
     fetch('http://localhost:8090/products/list')
       .then((response) => {
         if (!response.ok) {
@@ -25,7 +38,13 @@ const Product = () => {
       .catch((error) => {
         console.error('Error fetching products:', error);
       });
-  }, []);
+  };
+  
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
 
   const timeAgo = (createdTime) => {
     const now = new Date();
@@ -50,31 +69,110 @@ const Product = () => {
     }
   };
 
+  const sortProducts = (option) => {
+    setSortOption(option);
+    setIsDropdownOpen(false);
+    const sortedList = [...productList];
+    switch (option) {
+      case 'latest':
+        sortedList.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
+        break;
+      case 'oldest':
+        sortedList.sort((a, b) => new Date(a.createdTime) - new Date(b.createdTime));
+        break;
+      case 'mostViewed':
+        sortedList.sort((a, b) => b.hit - a.hit);
+        break;
+      case 'lowPrice':
+        sortedList.sort((a, b) => a.price - b.price);
+        break;
+      default:
+        break;
+    }
+    setProductList(sortedList);
+  };
+
+  const getSortOptionLabel = (option) => {
+    switch (option) {
+      case 'latest':
+        return '최신순';
+      case 'oldest':
+        return '오래된순';
+      case 'mostViewed':
+        return '조회순';
+      case 'lowPrice':
+        return '낮은 가격순';
+      default:
+        return '';
+    }
+  };
+
+  const handleEdit = (e, productId) => {
+    e.stopPropagation();
+    if (user) {
+      router.push(`/product/Edit/${productId}`);
+    } else {
+      alert('수정하려면 로그인이 필요합니다.');
+      router.push('/login');
+    }
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.h1}>Product List</h1>
+      <div
+        className={styles.filterContainer}
+        ref={dropdownRef}>
+        <div className={`${styles.dropdown}`}>
+          <button
+            className={styles.dropdownToggle}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+            <Icon>subject</Icon>
+            <span>{getSortOptionLabel(sortOption)}</span>
+          </button>
+          {isDropdownOpen && (
+            <ul className={styles.dropdownMenu}>
+              <li onClick={() => sortProducts('latest')}>최신순</li>
+              <li onClick={() => sortProducts('oldest')}>오래된순</li>
+              <li onClick={() => sortProducts('mostViewed')}>조회순</li>
+              <li onClick={() => sortProducts('lowPrice')}>낮은 가격순</li>
+            </ul>
+          )}
+        </div>
+      </div>
       <ul className={styles.productList}>
-        {productList.map(({ productId, title, price, heart, imageUrls, createdTime }) => (
+        {productList.map(({ productId, title, price, heart, hit, imageUrls, createdTime, seller }) => (
           <li
             onClick={() => router.push(`/product/${productId}`)}
             className={styles.product}
             key={productId}>
-            <Image
-              className={styles.image}
-              src={imageUrls[0]}
-              alt="image"
-              width={100}
-              height={100}
-            />
-            <h2 className={styles.title}>{title}</h2>
-            <div className={styles.info}>
-              <p className={styles.price}>{price}원</p>
-              <p className={styles.heart}>{timeAgo(createdTime)}</p>
+            <div className={styles.imageContainer}>
+              <Image
+                className={styles.image}
+                src={imageUrls[0]}
+                alt={title}
+                width={500}
+                height={450}
+              />
             </div>
-            <div className={styles.like}>
-              <Icon>star</Icon>
-              <p>{heart}</p>
+            <div className={styles.productInfo}>
+              <h2 className={styles.title}>{title}</h2>
+              <div className={styles.info}>
+                <p className={styles.price}>{price.toLocaleString()}원</p>
+                <p className={styles.time}>{timeAgo(createdTime)}</p>
+              </div>
+              <div className={styles.stats}>
+                <div className={styles.stat}>
+                  <Icon>favorite</Icon>
+                  <p>{heart}</p>
+                </div>
+                <div className={styles.stat}>
+                  <Icon>visibility</Icon>
+                  <p>{hit}</p>
+                </div>
+              </div>
             </div>
+            {seller && seller === sessionStorage.getItem("name") && <button onClick={(e) => handleEdit(e, productId)}>수정</button>}
           </li>
         ))}
       </ul>
