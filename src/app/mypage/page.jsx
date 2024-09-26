@@ -19,6 +19,7 @@ const MyPage = () => {
     email: '',
     member_id: '',
     eco_point: 0,
+    profileImageUrl: null,
   });
 
   useEffect(() => {
@@ -75,7 +76,7 @@ const MyPage = () => {
           className={styles.profileImage}
           width={70}
           height={70}
-          src={'/images/profile-icon.png'}
+          src={myInfo.profileImageUrl ? myInfo.profileImageUrl : '/images/profile-icon.png'}
           alt="프로필"
           loading="eager"
         />

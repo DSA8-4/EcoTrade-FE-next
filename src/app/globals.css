@@ -29,7 +29,7 @@ body {
   margin-right: 2rem;
 }
 
-.main-nav {
+/* .main-nav {
   flex: 0 1 auto;
   margin-right: 2rem;
 }
@@ -47,24 +47,7 @@ body {
   color: #4d4d4d;
   font-weight: bold;
   white-space: nowrap;
-}
-
-.search {
-  flex: 1 1 auto;
-  display: flex;
-  justify-content: center;
-  margin: 1 0rem;
-}
-
-.search input {
-  width: 100%;
-  max-width: 300px;
-  padding: 0.5rem 1rem;
-  margin-left: -30px;
-  background-color: #e9ecef;
-  border: none;
-  border-radius: 0.6rem;
-}
+} */
 
 .chat-button {
   padding: 0.5rem 20px;
