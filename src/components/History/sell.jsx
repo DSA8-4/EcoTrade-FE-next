@@ -1,12 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from '@/components/Icon';
+import { useRouter } from 'next/navigation';
 import styles from './history.module.css';
 
+const productStatus = {
+  TRADING: ['판매중', '#4caf50'],
+  RESERVED: ['예약중', '#ff9800'],
+  COMPLETED: ['판매완료', '#2196f3'],
+};
 const Sell = () => {
+  const [sells, setSells] = useState([]);
+  const router = useRouter();
+
   useEffect(() => {
-    fetch(`http://localhost:8090/members/mypage/sales/${sessionStorage.getItem('member_id')}`, {
+    fetch(`http://localhost:8090/members/mypage/sales/`, {
       headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-    }).then((response) => console.log(response));
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setSells(data);
+      });
   }, []);
 
   return (
@@ -20,7 +34,7 @@ const Sell = () => {
         판매 목록
       </h2>
       <div className={styles.transactionList}>
-        <div className={styles.transactionItem}>
+        {/* <div className={styles.transactionItem}>
           <div className={styles.itemInfo}>
             <span className={styles.itemName}>상품 X</span>
             <span className={styles.itemPrice}>₩25,000</span>
@@ -40,7 +54,23 @@ const Sell = () => {
             <span className={styles.itemPrice}>₩40,000</span>
           </div>
           <span className={`${styles.itemStatus} ${styles.statusCompleted}`}>거래완료</span>
-        </div>
+        </div> */}
+        {sells.map((sell) => (
+          <div
+            onClick={() => router.push(`/product/${sell.product_id}`)}
+            key={sell.product_id}
+            className={styles.transactionItem}>
+            <div className={styles.itemInfo}>
+              <span className={styles.itemName}>{sell.title}</span>
+              <span className={styles.itemPrice}>₩{sell.price}</span>
+            </div>
+            <span
+              style={{ backgroundColor: productStatus[sell.status][1] }}
+              className={`${styles.itemStatus}`}>
+              {productStatus[sell.status][0]}
+            </span>
+          </div>
+        ))}
       </div>
     </section>
   );

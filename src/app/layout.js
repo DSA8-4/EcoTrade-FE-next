@@ -1,8 +1,11 @@
+import NavBar from '@/components/NavBar';
+import Search from '@/components/Search/page';
 import Footer from '@/components/Footer';
 import UserBar from '@/components/UserBar';
 import { AuthProvider } from '@/context/AuthContext';
 import 'material-icons/iconfont/material-icons.css';
 import { Inter } from 'next/font/google';
+import Image from 'next/image';
 import Link from 'next/link';
 import './globals.css';
 
@@ -12,11 +15,6 @@ export const metadata = {
   title: 'EcoTrade',
   description: 'Used product save environment',
 };
-const navItems = [
-  { name: '상품목록', link: '/product' },
-  { name: '채팅목록', link: '/chat' },
-  { name: 'Eco포인트란?', link: '/EcoPoint' },
-];
 
 const RootLayout = ({ children }) => {
   return (
@@ -25,28 +23,19 @@ const RootLayout = ({ children }) => {
         <AuthProvider>
           <header className="header-content">
             <div className="logo">
-              <Link href="/">Logo</Link>
+              <Link href="/">
+                <Image
+                  src={'/images/ETIcon.png'}
+                  alt="logo"
+                  width={50}
+                  height={40}
+                />
+              </Link>
             </div>
-            <nav className="main-nav">
-              <ul>
-                {navItems.map(({ name, link }) => (
-                  <li
-                    key={name}
-                    className="nav-item">
-                    <Link href={link}>{name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <div className="search">
-              <input
-                type="text"
-                placeholder="상품명 검색"
-              />
-            </div>
+            <NavBar />
+            <Search />
             <UserBar />
           </header>
-
           <main className="main-body">{children}</main>
           <Footer />
         </AuthProvider>

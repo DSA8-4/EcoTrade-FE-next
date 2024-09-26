@@ -1,3 +1,8 @@
+.user {
+  display: flex;
+  width: 300px;
+}
+
 .logoutButton,
 .loggedIn {
   display: flex;
@@ -18,8 +23,6 @@
   border: none;
   font-size: inherit;
 }
-
-
 
 .profile {
   display: flex;

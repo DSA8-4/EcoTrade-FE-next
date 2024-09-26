@@ -10,7 +10,6 @@ body {
   flex-direction: column;
   max-width: 100vw;
   height: 100vh;
-  max-width: 100vw;
   overflow-x: hidden;
 }
 
@@ -19,51 +18,15 @@ body {
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
-  padding: 16px;
+  padding: 12px;
   align-items: center;
   justify-content: space-between;
+  user-select: none;
 }
 
 .logo {
   flex: 0 0 auto;
   margin-right: 2rem;
-}
-
-.main-nav {
-  flex: 0 1 auto;
-  margin-right: 2rem;
-}
-
-.main-nav ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  gap: 1rem;
-}
-
-.main-nav a {
-  text-decoration: none;
-  color: #4d4d4d;
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-.search {
-  flex: 1 1 auto;
-  display: flex;
-  justify-content: center;
-  margin: 1 0rem;
-}
-
-.search input {
-  width: 100%;
-  max-width: 300px;
-  padding: 0.5rem 1rem;
-  margin-left: -30px;
-  background-color: #e9ecef;
-  border: none;
-  border-radius: 0.6rem;
 }
 
 .chat-button {
@@ -85,6 +48,8 @@ body {
   background-size: cover;
   background-position: center;
   text-align: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .main-body::before {

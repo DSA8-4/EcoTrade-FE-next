@@ -1,9 +1,9 @@
 .Footer {
   background-color: #2f855a;
   color: white;
-  padding: 1rem;
+  padding: 12px;
   text-align: center;
   margin-top: auto;
-  margin: 0;
-  font-size: 0.875rem;
+  /* margin: 0; */
+  font-size: 1rem;
 }

@@ -92,11 +92,6 @@ const ChatRoom = ({ params: { id } }) => {
             }`}
             key={message.id || index}>
             <div className={styles.messageContent}>
-              {/* {message.sender === sessionStorage.getItem('name') ? (
-                <span className={styles.timestampLeft}>{formatTime(message.timestamp)}</span> // 왼쪽 배치
-              ) : (
-                <span className={styles.timestampRight}>{formatTime(message.timestamp)}</span> // 오른쪽 배치
-              )} */}
               {message.sender === sessionStorage.getItem('name') && (
                 <span className={styles.timestampRight}>{formatTime(message.timestamp)}</span>
               )}
