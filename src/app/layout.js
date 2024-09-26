@@ -1,5 +1,6 @@
 import NavBar from '@/components/NavBar';
 import Search from '@/components/Search/page';
+import Footer from '@/components/Footer';
 import UserBar from '@/components/UserBar';
 import { AuthProvider } from '@/context/AuthContext';
 import 'material-icons/iconfont/material-icons.css';
@@ -36,6 +37,7 @@ const RootLayout = ({ children }) => {
             <UserBar />
           </header>
           <main className="main-body">{children}</main>
+          <Footer />
         </AuthProvider>
       </body>
     </html>
