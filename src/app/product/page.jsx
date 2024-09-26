@@ -15,6 +15,7 @@ const Product = () => {
   const router = useRouter();
   const searchParams = useSearchParams().get('search');
   const dropdownRef = useRef(null);
+  const trigger = useRef(null);
 
   useEffect(() => {
     const fetchProducts = () => {
@@ -33,6 +34,16 @@ const Product = () => {
           console.error('Error fetching products:', error);
         });
     };
+
+    const observer = new IntersectionObserver(
+      async (entries, observer) => {
+        const element = entries[0];
+
+        if (element.isIntersecting && trigger.current) {
+        }
+      },
+      { threshold: 0.5 },
+    );
     fetchProducts();
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -180,6 +191,7 @@ const Product = () => {
           ),
         )}
       </ul>
+      <div ref={trigger}>Loading...</div>
     </div>
   );
 };
