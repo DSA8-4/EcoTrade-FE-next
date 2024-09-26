@@ -11,7 +11,7 @@
 .h1 {
   font-size: 30px;
   margin-bottom: 30px;
-  border: 8px solid rgba(0, 0, 0, .15);
+  border: 8px solid rgba(0, 0, 0, 0.15);
   background-color: #8b9e96;
   border-radius: 4px;
 }
@@ -22,7 +22,6 @@
   margin-bottom: 20px;
   position: relative;
 }
-
 
 .dropdownToggle {
   display: flex;
@@ -56,9 +55,9 @@
   list-style: none;
   background-color: #ffffff;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, .15);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
 }
 
 .dropdownMenu li {
@@ -142,7 +141,6 @@
   color: black;
   font-weight: bold;
 }
-
 
 .stats {
   display: flex;

@@ -48,7 +48,10 @@ const Chat = () => {
               />
             </div>
             <div className={styles.text}>
-              <h3>{room.name}</h3>
+              <h3 className={styles.nameSender}>
+                <p>품명: {room.name}</p>
+                <p>닉네임: {room.sender}</p>
+              </h3>
               <div className={styles.messageWrapper}>
                 <p>{room.lastMessage}</p>
                 <span className={styles.date}>{new Date().toLocaleDateString()}</span>

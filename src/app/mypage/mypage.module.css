@@ -19,6 +19,27 @@
   margin-bottom: 20px;
 }
 
+.profileImageContainer {
+  position: relative;
+  display: flex;
+  /* width: 100%; */
+  /* flex-direction: column; */
+  justify-content: center;
+  margin: 8px;
+  cursor: pointer;
+}
+
+.profileImage {
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+.profileImageEdit {
+  position: absolute;
+  bottom: -10%;
+  right: 45%;
+}
+
 .infoBox {
   background-color: #fff;
   border: 1px solid #ddd;

@@ -21,9 +21,10 @@ const UserBar = () => {
             className={styles.productUpload}>
             상품등록
           </button>
-          <div className={styles.profile}>
+          <div
+            onClick={() => router.push('/mypage')}
+            className={styles.profile}>
             <Image
-              onClick={() => router.push('mypage')}
               className="profilePicture"
               width={25}
               height={25}

@@ -2,8 +2,27 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import styles from '../auth.module.css';
 import { useRouter } from 'next/navigation';
+import styles from '../auth.module.css';
+
+const areas = [
+  { value: 'SEOUL', label: '서울특별시' },
+  { value: 'BUSAN', label: '부산광역시' },
+  { value: 'DAEJEON', label: '대전광역시' },
+  { value: 'DAEGU', label: '대구광역시' },
+  { value: 'INCHEON', label: '인천광역시' },
+  { value: 'GWANGJU', label: '광주광역시' },
+  { value: 'ULSAN', label: '울산광역시' },
+  { value: 'SEJONG', label: '세종특별자치시' },
+  { value: 'GYENGGI_DO', label: '경기도' },
+  { value: 'CHUNGCHEONGBUK_DO', label: '강원도' },
+  { value: 'CHUNGCHEONGNAM_DO', label: '충청북도' },
+  { value: 'JEOLLABUK_DO', label: '전라북도' },
+  { value: 'JEOLLANAM_DO', label: '전라남도' },
+  { value: 'GYEONGSANBUK_DO', label: '경상북도' },
+  { value: 'GYEONGSANNAM_DO', label: '경상남도' },
+  { value: 'JEJU', label: '제주도' },
+];
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +30,7 @@ const Register = () => {
     password: '',
     name: '',
     email: '',
+    area: 'SEOUL',
   });
 
   const [checkedPW, setCheckedPW] = useState('');
@@ -21,7 +41,6 @@ const Register = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    console.log(formData);
   };
 
   const handlePWChange = (e) => setCheckedPW(e.target.value);
@@ -45,7 +64,7 @@ const Register = () => {
       }
       const data = await response.json();
       alert(data.message || '회원가입 완료!');
-      router.replace("/")
+      router.replace('/');
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('로그인 문제 발생');
@@ -101,6 +120,18 @@ const Register = () => {
             onChange={handleChange}
             className={styles.input}
           />
+          <select
+            name="area"
+            onChange={handleChange}
+            className={styles.select}>
+            {areas.map((area) => (
+              <option
+                key={area.value}
+                value={area.value}>
+                {area.label}
+              </option>
+            ))}
+          </select>
           <button
             type="submit"
             className={styles.button}>

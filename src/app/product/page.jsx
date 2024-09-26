@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import Icon from '@/components/Icon';
 import { AuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './products.module.css';
 
 const Product = () => {
@@ -13,33 +13,33 @@ const Product = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user } = useContext(AuthContext);
   const router = useRouter();
+  const searchParams = useSearchParams().get('search');
   const dropdownRef = useRef(null);
 
   useEffect(() => {
+    const fetchProducts = () => {
+      fetch(`http://localhost:8090/products/list?searchText=${searchParams ? searchParams : ''}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setProductList(data);
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error('Error fetching products:', error);
+        });
+    };
     fetchProducts();
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [searchParams]);
 
-  const fetchProducts = () => {
-    fetch('http://localhost:8090/products/list')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setProductList(data);
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching products:', error);
-      });
-  };
-  
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsDropdownOpen(false);
@@ -119,7 +119,7 @@ const Product = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.h1}>Product List</h1>
+      {/* <h1 className={styles.h1}>Product List</h1> */}
       <div
         className={styles.filterContainer}
         ref={dropdownRef}>
@@ -141,40 +141,44 @@ const Product = () => {
         </div>
       </div>
       <ul className={styles.productList}>
-        {productList.map(({ productId, title, price, heart, hit, imageUrls, createdTime, seller }) => (
-          <li
-            onClick={() => router.push(`/product/${productId}`)}
-            className={styles.product}
-            key={productId}>
-            <div className={styles.imageContainer}>
-              <Image
-                className={styles.image}
-                src={imageUrls[0]}
-                alt={title}
-                width={500}
-                height={450}
-              />
-            </div>
-            <div className={styles.productInfo}>
-              <h2 className={styles.title}>{title}</h2>
-              <div className={styles.info}>
-                <p className={styles.price}>{price.toLocaleString()}원</p>
-                <p className={styles.time}>{timeAgo(createdTime)}</p>
+        {productList.map(
+          ({ productId, title, price, heart, hit, imageUrls, createdTime, seller }) => (
+            <li
+              onClick={() => router.push(`/product/${productId}`)}
+              className={styles.product}
+              key={productId}>
+              <div className={styles.imageContainer}>
+                <Image
+                  className={styles.image}
+                  src={imageUrls[0]}
+                  alt={title}
+                  width={500}
+                  height={450}
+                />
               </div>
-              <div className={styles.stats}>
-                <div className={styles.stat}>
-                  <Icon>favorite</Icon>
-                  <p>{heart}</p>
+              <div className={styles.productInfo}>
+                <h2 className={styles.title}>{title}</h2>
+                <div className={styles.info}>
+                  <p className={styles.price}>{price.toLocaleString()}원</p>
+                  <p className={styles.time}>{timeAgo(createdTime)}</p>
                 </div>
-                <div className={styles.stat}>
-                  <Icon>visibility</Icon>
-                  <p>{hit}</p>
+                <div className={styles.stats}>
+                  <div className={styles.stat}>
+                    <Icon>favorite</Icon>
+                    <p>{heart}</p>
+                  </div>
+                  <div className={styles.stat}>
+                    <Icon>visibility</Icon>
+                    <p>{hit}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            {seller && seller === sessionStorage.getItem("name") && <button onClick={(e) => handleEdit(e, productId)}>수정</button>}
-          </li>
-        ))}
+              {seller && seller === sessionStorage.getItem('name') && (
+                <button onClick={(e) => handleEdit(e, productId)}>수정</button>
+              )}
+            </li>
+          ),
+        )}
       </ul>
     </div>
   );
