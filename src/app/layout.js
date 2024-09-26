@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import UserBar from '@/components/UserBar';
 import { AuthProvider } from '@/context/AuthContext';
 import 'material-icons/iconfont/material-icons.css';
@@ -16,6 +17,7 @@ const navItems = [
   { name: '채팅목록', link: '/chat' },
   { name: 'Eco포인트란?', link: '/EcoPoint' },
 ];
+
 const RootLayout = ({ children }) => {
   return (
     <html lang="ko">
@@ -46,6 +48,7 @@ const RootLayout = ({ children }) => {
           </header>
 
           <main className="main-body">{children}</main>
+          <Footer />
         </AuthProvider>
       </body>
     </html>
