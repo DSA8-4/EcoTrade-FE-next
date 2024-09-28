@@ -17,8 +17,8 @@ const ProductUpload = () => {
   const [formData, setFormData] = useState({
     title: '',
     ecoPoints: '',
-    contents: '',
-    productImages: [],
+    content: '',
+    ecoProductImages: [],
   });
 
   const handleChange = (e) => {
@@ -31,24 +31,14 @@ const ProductUpload = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 이미지 URL을 formData에 추가
-    const imageUrls = await uploadImages(formData.productImages);
-
-    // FormData 객체 생성
-    const formDataToSend = new FormData();
-    formDataToSend.append('title', formData.title);
-    formDataToSend.append('contents', formData.contents);
-    formDataToSend.append('ecoPoints', Number(formData.ecoPoints)); // 숫자로 변환
-    imageUrls.forEach((url) => formDataToSend.append('imageUrls', url)); // 여러 개의 URL 추가
-
     try {
-      console.log('Submitting form with data:', formDataToSend);
       const response = await fetch('http://localhost:8090/EcoProduct/register', {
         method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
-        body: formDataToSend, // FormData로 변환
+        body: JSON.stringify(formData), // FormData로 변환
       });
 
       if (!response.ok) {
@@ -56,7 +46,6 @@ const ProductUpload = () => {
         console.error('Error response:', errorResponse);
         throw new Error('Network response was not ok: ' + errorResponse.message);
       } else {
-        console.log('formDataToSend: ', formData);
         // router.push('/admin/product');
         alert('에코포인트 상품이 성공적으로 등록되었습니다.');
       }
@@ -71,7 +60,7 @@ const ProductUpload = () => {
     const result = await uploadImages(Array.from(e.target.files));
     setFormData({
       ...formData,
-      productImages: result,
+      ecoProductImages: result,
     });
     setUploading(false);
   };
@@ -138,12 +127,12 @@ const ProductUpload = () => {
         <div className={styles.inlined}>
           <label
             className={styles.label}
-            htmlFor="contents">
+            htmlFor="content">
             설명
           </label>
           <textarea
             className={styles.contents}
-            name="contents"
+            name="content"
             required
             onChange={handleChange}></textarea>
         </div>
@@ -156,17 +145,17 @@ const ProductUpload = () => {
           <input
             type="file"
             className={styles.input}
-            name="images"
+            name="ecoProductImages"
             multiple
             accept="image/*"
             onChange={changeImage}
           />
         </div>
-        {formData.productImages.length === 0 ? (
+        {formData.ecoProductImages.length === 0 ? (
           <Icon size={'160px'}>image_search</Icon>
         ) : (
           <div className={styles.imagePreview}>
-            {formData.productImages.map((src) => (
+            {formData.ecoProductImages.map((src) => (
               <Image
                 key={src}
                 src={src}
