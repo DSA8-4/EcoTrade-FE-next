@@ -1,27 +1,32 @@
 'use client';
 
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import Icon from '@/components/Icon';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
-import styles from './products.module.css';
+import { useRouter } from 'next/navigation';
+import Icon from '../Icon';
+import styles from './productList.module.css';
 
-const Product = () => {
-  const [productList, setProductList] = useState([]);
-  const [page, setPage] = useState(0);
+const ProductList = ({ initialProducts, searchParams }) => {
+  const router = useRouter();
+
+  const [fetching, setFetching] = useState(false);
+  const [productList, setProductList] = useState([...initialProducts]);
+  const [isLast, setIsLast] = useState(false);
+  const [page, setPage] = useState(1);
   const [sortOption, setSortOption] = useState('oldest');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [fetching, setFetching] = useState(false);
-  const [isLast, setIsLast] = useState(false);
-
-  const { user } = useContext(AuthContext);
-  const router = useRouter();
-  const searchParams = useSearchParams().get('search');
   const dropdownRef = useRef(null);
+  const { user } = useContext(AuthContext);
 
-  const fetchProducts = useCallback(() => {
-    setFetching(true);
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const fetchProducts = () => {
     fetch(
       `http://localhost:8090/products/list?searchText=${
         searchParams ? searchParams : ''
@@ -34,34 +39,13 @@ const Product = () => {
         return response.json();
       })
       .then((data) => {
-        if (data.length > 0) {
-          if (data.length < 12) setIsLast(true);
-          setProductList([...productList, ...data]);
-          setPage((page) => page + 1);
-        } else {
-          setIsLast(true);
-        }
-        // setProductList(data);
+        setProductList(data);
+        // setPage((page) => page + 1);
         console.log(data);
       })
       .catch((error) => {
         console.error('Error fetching products:', error);
       });
-    setFetching(false);
-  }, [productList, searchParams]);
-
-  useEffect(() => {
-    fetchProducts();
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [searchParams]);
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsDropdownOpen(false);
-    }
   };
 
   const timeAgo = (createdTime) => {
@@ -87,10 +71,26 @@ const Product = () => {
     }
   };
 
+  const handleEdit = (e, productId) => {
+    e.stopPropagation();
+    if (user) {
+      router.push(`/product/Edit/${productId}`);
+    } else {
+      alert('수정하려면 로그인이 필요합니다.');
+      router.push('/login');
+    }
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
   const sortProducts = (option) => {
     setSortOption(option);
     setIsDropdownOpen(false);
-    const sortedList = [...productList];
+    const sortedList = [...initialProducts];
     switch (option) {
       case 'latest':
         sortedList.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
@@ -125,19 +125,8 @@ const Product = () => {
     }
   };
 
-  const handleEdit = (e, productId) => {
-    e.stopPropagation();
-    if (user) {
-      router.push(`/product/Edit/${productId}`);
-    } else {
-      alert('수정하려면 로그인이 필요합니다.');
-      router.push('/login');
-    }
-  };
-
   return (
-    <div className={styles.container}>
-      {/* <h1 className={styles.h1}>Product List</h1> */}
+    <>
       <div
         className={styles.filterContainer}
         ref={dropdownRef}>
@@ -198,22 +187,8 @@ const Product = () => {
           ),
         )}
       </ul>
-      {!isLast ? (
-        fetching ? (
-          <div>Loading...</div>
-        ) : (
-          <button
-            onClick={fetchProducts}
-            className={styles.loadMore}>
-            더보기
-          </button>
-        )
-      ) : (
-        ''
-      )}
-      {/* <div ref={trigger}>Loading...</div> */}
-    </div>
+      {fetching ? <div>Loading...</div> : <button className={styles.loadMore}>더보기</button>}
+    </>
   );
 };
-
-export default Product;
+export default ProductList;

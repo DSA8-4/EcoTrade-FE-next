@@ -54,7 +54,7 @@ const Chat = () => {
               </h3>
               <div className={styles.messageWrapper}>
                 <p>{room.lastMessage}</p>
-                <span className={styles.date}>{new Date().toLocaleDateString()}</span>
+                <span className={styles.date}>{new Date(room.timestamp).toLocaleDateString()}</span>
               </div>
             </div>
             <div className={styles.productImage}>
