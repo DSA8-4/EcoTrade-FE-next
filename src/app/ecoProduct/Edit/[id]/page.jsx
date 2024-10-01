@@ -1,25 +1,55 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from '@/components/Icon';
 import { firebaseConfig } from '@/utils/config';
 import { initializeApp } from 'firebase/app';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import styles from './productUpload.module.css';
+import styles from './ecoProductEdit.module.css';
 
-const ProductUpload = () => {
+const EcoProductEdit = ({ params }) => {
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
   const router = useRouter();
-  const [uploading, setUploading] = useState(false);
+  const { id } = params;
+
   const [formData, setFormData] = useState({
     title: '',
     ecoPoints: '',
     content: '',
     ecoProductImages: [],
   });
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`http://localhost:8090/EcoProduct/detail/${id}`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('상품 정보를 불러오는 데 실패했습니다.');
+        }
+        const data = await response.json();
+        setFormData({
+          title: data.title || '',
+          ecoPoints: data.price || '',
+          content: data.content || '',
+          ecoProductImages: data.imageUrls || [], // 기존 이미지
+        });
+        console.log('ecoProduct: ', data);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+        alert(error.message);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
 
   const handleChange = (e) => {
     setFormData({
@@ -30,39 +60,35 @@ const ProductUpload = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch('http://localhost:8090/EcoProduct/register', {
-        method: 'POST',
+      const response = await fetch(`http://localhost:8090/EcoProduct/update/${id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
-        body: JSON.stringify(formData), // FormData로 변환
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        const errorResponse = await response.json(); // 오류 응답을 JSON으로 변환
-        console.error('Error response:', errorResponse);
-        throw new Error('Network response was not ok: ' + errorResponse.message);
-      } else {
-        alert('에코포인트 상품이 성공적으로 등록되었습니다.');
-        router.push('/ecoProduct');
+        throw new Error('상품 수정에 실패했습니다.');
       }
+
+      alert('상품이 성공적으로 수정되었습니다.');
+      router.push(`/ecoProduct`);
     } catch (error) {
-      console.error('상품 등록에 실패했습니다:', error);
-      alert('상품 등록에 실패했습니다. 다시 시도해주세요.');
+      console.error('Failed to update product:', error);
+      alert(error.message);
     }
   };
 
   const changeImage = async (e) => {
-    setUploading(true);
-    const result = await uploadImages(Array.from(e.target.files));
+    const files = Array.from(e.target.files);
+    const imageUrls = await uploadImages(files); // 이미지 업로드 및 URL 가져오기
     setFormData({
       ...formData,
-      ecoProductImages: result,
+      ecoProductImages: imageUrls, // 기존 이미지를 삭제하고 새로운 이미지만 설정
     });
-    setUploading(false);
   };
 
   const uploadImages = (images) => {
@@ -90,9 +116,10 @@ const ProductUpload = () => {
 
     return Promise.all(uploadPromises);
   };
+
   return (
     <div className={styles.container}>
-      <h1 className={styles.h1}>상품 등록(관리자 전용)</h1>
+      <h1 className={styles.h1}>상품 수정</h1>
       <form
         onSubmit={handleSubmit}
         className={styles.productForm}>
@@ -107,6 +134,7 @@ const ProductUpload = () => {
             type="text"
             className={styles.input}
             name="title"
+            value={formData.title}
             required
           />
         </div>
@@ -121,20 +149,23 @@ const ProductUpload = () => {
             type="number"
             className={styles.input}
             name="ecoPoints"
+            value={formData.ecoPoints}
             required
           />
         </div>
         <div className={styles.inlined}>
           <label
             className={styles.label}
-            htmlFor="content">
+            htmlFor="contents">
             설명
           </label>
           <textarea
             className={styles.contents}
             name="content"
+            value={formData.content}
             required
-            onChange={handleChange}></textarea>
+            onChange={handleChange}
+          />
         </div>
         <div className={styles.inlined}>
           <label
@@ -155,9 +186,9 @@ const ProductUpload = () => {
           <Icon size={'160px'}>image_search</Icon>
         ) : (
           <div className={styles.imagePreview}>
-            {formData.ecoProductImages.map((src) => (
+            {formData.ecoProductImages.map((src, index) => (
               <Image
-                key={src}
+                key={index}
                 src={src}
                 alt="preview"
                 width={160}
@@ -166,16 +197,14 @@ const ProductUpload = () => {
             ))}
           </div>
         )}
-
         <button
           className={styles.button}
-          type="submit"
-          disabled={uploading}>
-          {!uploading ? '등록하기' : '이미지 업로딩...'}
+          type="submit">
+          수정하기
         </button>
       </form>
     </div>
   );
 };
 
-export default ProductUpload;
+export default EcoProductEdit;

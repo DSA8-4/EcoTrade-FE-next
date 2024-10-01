@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import styles from './adminProduct.module.css';
+import styles from './ecoProduct.module.css';
 
-const AdminProductList = () => {
+const EcoProduct = () => {
   const router = useRouter();
   const [ecoProducts, setEcoProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,9 +46,45 @@ const AdminProductList = () => {
     setSearchText(e.target.value);
   };
 
+  const handleProductClick = (id) => {
+    router.push(`/ecoProduct/${id}`); // 상세 페이지로 이동
+  };
+
+  const handleEditClick = (id) => {
+    // e.stopPropagation();
+    // if (user) {
+    router.push(`ecoProduct/Edit/${id}`);
+    // } else {
+    //   alert('수정하려면 로그인이 필요합니다.');
+    //   router.push('/login');
+    // }
+  };
+
+  const handleDeleteClick = async (id) => {
+    if (window.confirm('해당 상품을 삭제하시겠습니까?')) {
+      try {
+        const response = await fetch(`http://localhost:8090/EcoProduct/delete/${id}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('상품 삭제에 실패했습니다.');
+        }
+        alert('상품이 성공적으로 삭제되었습니다.');
+        setEcoProducts(ecoProducts.filter((product) => product.ecoProductId !== id)); // 삭제 후 상태 업데이트
+      } catch (error) {
+        console.error('삭제 중 오류 발생:', error);
+        alert(error.message);
+      }
+    }
+  };
+
   return (
     <div className={styles.container}>
-      <h1 className={styles.h1}>관리자 전용 상품 목록</h1>
+      <h1 className={styles.h1}>상품 목록</h1>
       <input
         type="text"
         value={searchText}
@@ -67,19 +103,30 @@ const AdminProductList = () => {
                 className={styles.product}>
                 <div className={styles.imageContainer}>
                   <Image
+                    onClick={() => handleProductClick(product.ecoProductId)}
                     className={styles.image}
                     src={product.imageUrls[0]} // 이미지 URL
                     alt={product.title}
-                    width={250}
-                    height={250}
+                    width={500}
+                    height={450}
                   />
                 </div>
                 <div className={styles.productInfo}>
                   <h2 className={styles.title}>{product.title}</h2>
                   <div className={styles.info}>
-                    <p className={styles.price}>{product.price} 포인트</p>
-                    <p className={styles.time}>{product.createdTime}</p>
+                    <p className={styles.price}>{product.price} P</p>
                   </div>
+                  <button
+                    className={styles.editButton}
+                    onClick={() => handleEditClick(product.ecoProductId)}>
+                    수정하기
+                  </button>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => handleDeleteClick(product.ecoProductId)}>
+                    삭제하기
+                  </button>
+                  {/* <p className={styles.time}>{product.createdTime}</p> */}
                 </div>
               </li>
             ))
@@ -92,4 +139,4 @@ const AdminProductList = () => {
   );
 };
 
-export default AdminProductList;
+export default EcoProduct;

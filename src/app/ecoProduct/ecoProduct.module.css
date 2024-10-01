@@ -19,7 +19,7 @@
 
 .searchInput {
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   border: 1px solid #ddd;
   border-radius: 4px;
   width: 100%;
@@ -36,12 +36,14 @@
 .product {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  border: 1px solid #ddd;
+  width: 80%;
+  /* border: 1px solid #ddd; */
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out;
+  z-index: 10;
+
 }
 
 .product:hover {
@@ -51,7 +53,7 @@
 
 .imageContainer {
   position: relative;
-  width: 100%;
+  /* width: 100%; */
   padding-top: 100%;
   /* 1:1 비율 유지 */
 }
@@ -66,7 +68,11 @@
 }
 
 .productInfo {
-  padding: 12px;
+  /* font-size: 30px; */
+  /* margin-bottom: 30px; */
+  background-color: #ddd;
+  border-radius: 4px;
+  padding: 10px;
 }
 
 .title {
@@ -83,15 +89,48 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+
 }
 
 .price {
   font-weight: bold;
   color: #e44d26;
+  margin-left: 33px;
+  padding-left: 25px;
+  display: flex;
 }
 
-.time {
+/* .time {
   font-size: 12px;
   color: black;
   font-weight: bold;
+} */
+
+.editButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.editButton:hover {
+  background-color: #45a049;
+}
+
+.deleteButton {
+  background-color: #e44d26;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.deleteButton:hover {
+  background-color: #d43f24;
 }
