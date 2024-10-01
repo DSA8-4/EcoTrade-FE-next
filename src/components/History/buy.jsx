@@ -1,30 +1,32 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from '@/components/Icon';
 import styles from './history.module.css';
 
 const Buy = () => {
+  const [buys, setBuys] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:8090/members/mypage/purchases}`, {
+    fetch(`http://localhost:8090/members/mypage/purchases`, {
       headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        setBuys(data);
       });
   }, []);
 
   return (
     <section className={styles.transactionSection}>
-      <h2>
+      <h2 className={styles.h2}>
         <Icon
           size={'32px'}
           color={'#4caf50'}>
           local_mall
         </Icon>
-        구매 목록
+        <p>구매 목록</p>
       </h2>
       <div className={styles.transactionList}>
-        <div className={styles.transactionItem}>
+        {/* <div className={styles.transactionItem}>
           <div className={styles.itemInfo}>
             <span className={styles.itemName}>상품 A</span>
             <span className={styles.itemPrice}>₩20,000</span>
@@ -44,7 +46,7 @@ const Buy = () => {
             <span className={styles.itemPrice}>₩30,000</span>
           </div>
           <span className={`${styles.itemStatus} ${styles.statusCompleted}`}>거래완료</span>
-        </div>
+        </div> */}
       </div>
     </section>
   );

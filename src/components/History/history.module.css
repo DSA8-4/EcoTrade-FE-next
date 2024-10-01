@@ -6,6 +6,11 @@
   margin-bottom: 20px;
 }
 
+.h2 {
+  display: flex;
+  align-items: center;
+}
+
 .transactionList {
   list-style: none;
   padding: 0;
