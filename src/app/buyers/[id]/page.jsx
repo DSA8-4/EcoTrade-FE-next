@@ -24,9 +24,7 @@ const Buyers = ({ params: { id } }) => {
     fetch(`http://localhost:8090/products/purchase/${id}`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-      body: {
-        name,
-      },
+      body: { name },
     })
       .then((response) => response.json())
       .then((data) => console.log(data));
@@ -61,7 +59,7 @@ const Buyers = ({ params: { id } }) => {
             </div>
 
             <button
-              onClick={(room) => selectBuyer(room.name)}
+              onClick={(room) => selectBuyer(room.sender)}
               className={styles.assertBuyer}>
               구매 확정
             </button>

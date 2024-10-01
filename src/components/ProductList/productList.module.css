@@ -91,9 +91,10 @@
 }
 
 .loadMore {
+  margin-top: 8px;
   padding: 4px;
   background: #4caf50;
-  border: #4caf50;
+  border: #50d655;
   border-radius: 4px;
   color: whitesmoke;
 }

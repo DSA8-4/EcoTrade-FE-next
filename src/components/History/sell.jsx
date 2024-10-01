@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Icon from '@/components/Icon';
+import { formatPrice } from '@/utils/formatPrice';
 import { useRouter } from 'next/navigation';
 import styles from './history.module.css';
 
@@ -13,7 +14,7 @@ const Sell = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`http://localhost:8090/members/mypage/sales/`, {
+    fetch(`http://localhost:8090/members/mypage/sales`, {
       headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
     })
       .then((response) => response.json())
@@ -25,13 +26,13 @@ const Sell = () => {
 
   return (
     <section className={styles.transactionSection}>
-      <h2>
+      <h2 className={styles.h2}>
         <Icon
           size={'32x'}
           color={'#4caf50'}>
           sell
         </Icon>
-        판매 목록
+        <p>판매 목록</p>
       </h2>
       <div className={styles.transactionList}>
         {/* <div className={styles.transactionItem}>
@@ -55,22 +56,24 @@ const Sell = () => {
           </div>
           <span className={`${styles.itemStatus} ${styles.statusCompleted}`}>거래완료</span>
         </div> */}
-        {sells.map((sell) => (
-          <div
-            onClick={() => router.push(`/product/${sell.product_id}`)}
-            key={sell.product_id}
-            className={styles.transactionItem}>
-            <div className={styles.itemInfo}>
-              <span className={styles.itemName}>{sell.title}</span>
-              <span className={styles.itemPrice}>₩{sell.price}</span>
-            </div>
-            <span
-              style={{ backgroundColor: productStatus[sell.status][1] }}
-              className={`${styles.itemStatus}`}>
-              {productStatus[sell.status][0]}
-            </span>
-          </div>
-        ))}
+        {sells.length > 0
+          ? sells.map((sell) => (
+              <div
+                onClick={() => router.push(`/product/${sell.product_id}`)}
+                key={sell.product_id}
+                className={styles.transactionItem}>
+                <div className={styles.itemInfo}>
+                  <span className={styles.itemName}>{sell.title}</span>
+                  <span className={styles.itemPrice}>{formatPrice(sell.price)}</span>
+                </div>
+                <span
+                  // style={{ backgroundColor: productStatus[sell.status][1] }}
+                  className={styles.itemStatus}>
+                  {/* {productStatus[sell.status][0]} */}
+                </span>
+              </div>
+            ))
+          : ''}
       </div>
     </section>
   );

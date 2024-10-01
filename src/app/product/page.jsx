@@ -10,7 +10,7 @@ import styles from './products.module.css';
 const Product = () => {
   const [productList, setProductList] = useState([]);
   const [page, setPage] = useState(0);
-  const [sortOption, setSortOption] = useState('oldest');
+  const [sortOption, setSortOption] = useState('latest');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [fetching, setFetching] = useState(false);
   const [isLast, setIsLast] = useState(false);
@@ -160,7 +160,7 @@ const Product = () => {
       </div>
       <ul className={styles.productList}>
         {productList.map(
-          ({ productId, title, price, heart, hit, imageUrls, createdTime, seller }) => (
+          ({ productId, title, price, heart, hit, imageUrls, createdTime, seller, status }) => (
             <li
               onClick={() => router.push(`/product/${productId}`)}
               className={styles.product}
@@ -173,6 +173,15 @@ const Product = () => {
                   width={500}
                   height={450}
                 />
+                {status === '거래완료' && (
+                  <Image
+                    className={styles.soldOutImage}
+                    src={'/images/sold_out.png'}
+                    alt={'sold_out'}
+                    width={300}
+                    height={300}
+                  />
+                )}
               </div>
               <div className={styles.productInfo}>
                 <h2 className={styles.title}>{title}</h2>
@@ -191,7 +200,7 @@ const Product = () => {
                   </div>
                 </div>
               </div>
-              {seller && seller === sessionStorage.getItem('name') && (
+              {status === '거래중' && seller === sessionStorage.getItem('name') && (
                 <button onClick={(e) => handleEdit(e, productId)}>수정</button>
               )}
             </li>
@@ -205,13 +214,12 @@ const Product = () => {
           <button
             onClick={fetchProducts}
             className={styles.loadMore}>
-            더보기
+            ▽ 더보기
           </button>
         )
       ) : (
         ''
       )}
-      {/* <div ref={trigger}>Loading...</div> */}
     </div>
   );
 };
