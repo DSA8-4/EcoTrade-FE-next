@@ -69,7 +69,7 @@ const ProductUpload = () => {
         throw new Error('Network response was not ok');
       } else {
         router.push('/product');
-        alert('Product successfully registered.');
+        alert('상품이 등록되었습니다');
       }
     } catch (error) {
       console.error('Failed to register product:', error);

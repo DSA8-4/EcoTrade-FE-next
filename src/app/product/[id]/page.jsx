@@ -28,7 +28,12 @@ const ProductDetail = ({ params: { id } }) => {
         console.log(data);
         setProduct(data);
         setLocalHeart(data.heart);
-        setIsFavorite(data.isFavoritedByUser);
+        const me = sessionStorage.getItem('member_id');
+        for (const member of data.likedMembers) {
+          if (member === me) {
+            setIsFavorite(true);
+          }
+        }
       })
       .catch((error) => {
         console.error('Error fetching product:', error);
