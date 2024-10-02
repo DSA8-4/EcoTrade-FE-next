@@ -34,37 +34,41 @@ const Buyers = ({ params: { id } }) => {
     <div className={styles.container}>
       <h2>{chatRooms.length && chatRooms[0].name}에 관심을 보인 사람들</h2>
       <div className={styles.roomList}>
-        {chatRooms.map((room, index) => (
-          <div
-            key={`${room.id}-${index}`}
-            className={styles.roomItem}>
-            <div
-              onClick={() => router.push(`/chat/${id}`)}
-              className={styles.icon}>
-              <Image
-                src="/images/profile-icon.png"
-                alt="아이콘"
-                width={30}
-                height={30}
-              />
-            </div>
-            <div
-              onClick={() => router.push(`/chat/${id}`)}
-              className={styles.text}>
-              <h3>{room.sender}</h3>
-              <div className={styles.messageWrapper}>
-                <p>{room.lastMessage}</p>
-                <span className={styles.date}>{new Date(room.timestamp).toLocaleDateString()}</span>
-              </div>
-            </div>
+        {chatRooms.length !== 0
+          ? chatRooms.map((room, index) => (
+              <div
+                key={`${room.id}-${index}`}
+                className={styles.roomItem}>
+                <div
+                  onClick={() => router.push(`/chat/${id}`)}
+                  className={styles.icon}>
+                  <Image
+                    src="/images/profile-icon.png"
+                    alt="아이콘"
+                    width={30}
+                    height={30}
+                  />
+                </div>
+                <div
+                  onClick={() => router.push(`/chat/${id}`)}
+                  className={styles.text}>
+                  <h3>{room.sender}</h3>
+                  <div className={styles.messageWrapper}>
+                    <p>{room.lastMessage}</p>
+                    <span className={styles.date}>
+                      {new Date(room.timestamp).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
 
-            <button
-              onClick={(room) => selectBuyer(room.sender)}
-              className={styles.assertBuyer}>
-              구매 확정
-            </button>
-          </div>
-        ))}
+                <button
+                  onClick={(room) => selectBuyer(room.sender)}
+                  className={styles.assertBuyer}>
+                  구매 확정
+                </button>
+              </div>
+            ))
+          : '진행중인 채팅이 없습니다.'}
       </div>
     </div>
   );
