@@ -12,7 +12,7 @@ import styles from './mypage.module.css';
 const MyPage = () => {
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
-
+  // const [profileImage, setProfileImage] = useState('');
   const imageInput = useRef(null);
   const [myInfo, setMyInfo] = useState({
     name: '',
@@ -48,6 +48,18 @@ const MyPage = () => {
     }).then((response) => console.log(response));
   };
 
+  const profileImageChange = (url) => {
+    fetch(`http://localhost:8090/members/profile/upload`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ url }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
   const profileImageUpload = (fileItem) => {
     const storageRef = ref(storage, 'images/' + fileItem.name);
     const uploadTask = uploadBytesResumable(storageRef, fileItem);
@@ -61,6 +73,8 @@ const MyPage = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           console.log('File available at', url);
+          setMyInfo({ ...myInfo, profileImageUrl: url });
+          profileImageChange(url);
         });
       },
     );
@@ -96,7 +110,7 @@ const MyPage = () => {
         <strong>Member ID: {myInfo && myInfo.member_id}</strong>
       </div>
 
-      <div className={styles.infoBox}>
+      {/* <div className={styles.infoBox}>
         <div className={styles.inlineContainer}>
           <strong>Name: </strong>
           <input
@@ -120,16 +134,37 @@ const MyPage = () => {
             onChange={(e) => setMyInfo({ ...myInfo, email: e.target.value })}
           />
         </div>
-      </div>
+      </div> */}
 
       <div className={styles.infoBox}>
-        <button
-          onClick={profileChange}
-          className={`${styles.button} ${styles.editProfileButton}`}>
-          회원 정보 수정
-        </button>
-        <button className={`${styles.button} ${styles.saveProfileButton}`}>저장</button>
-        <button className={`${styles.button} ${styles.cancelProfileButton}`}>취소</button>
+        <div className={styles.inlineContainer}>
+          <strong>Name: </strong>
+          <input
+            type="text"
+            name="name"
+            value={myInfo.name || ''}
+            className={styles.smallInputField}
+            onChange={(e) => setMyInfo({ ...myInfo, name: e.target.value })}
+          />
+        </div>
+        <div className={styles.inlineContainer}>
+          <strong>Email : </strong>
+          <input
+            type="email"
+            name="email"
+            value={myInfo.email || ''}
+            className={styles.smallInputField}
+            onChange={(e) => setMyInfo({ ...myInfo, email: e.target.value })}
+          />
+        </div>
+        <div className={styles.deleteAccountContainer}>
+          <button
+            onClick={profileChange}
+            className={`${styles.button} ${styles.editProfileButton}`}>
+            회원 정보 수정
+          </button>
+          <button className={`${styles.button} ${styles.cancelProfileButton}`}>취소</button>
+        </div>
       </div>
 
       <div className={styles.infoBox}>

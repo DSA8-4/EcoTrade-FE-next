@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
     sessionStorage.setItem('name', userData.name);
     sessionStorage.setItem('member_id', userData.member_id);
     sessionStorage.setItem('token', userData.token);
+    sessionStorage.setItem('profileImage', userData.profileImage);
   };
 
   const logout = () => {

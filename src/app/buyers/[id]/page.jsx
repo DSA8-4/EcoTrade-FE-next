@@ -15,19 +15,23 @@ const Buyers = ({ params: { id } }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log('chatroombyid', data);
         setChatRooms(data);
       });
   }, [id]);
 
   const selectBuyer = (name) => {
+    console.log(name);
     fetch(`http://localhost:8090/products/purchase/${id}`, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-      body: { name },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ name }),
+    }).then((response) => {
+      console.log(response);
+    });
   };
 
   return (
@@ -62,7 +66,7 @@ const Buyers = ({ params: { id } }) => {
                 </div>
 
                 <button
-                  onClick={(room) => selectBuyer(room.sender)}
+                  onClick={() => selectBuyer(room.sender)}
                   className={styles.assertBuyer}>
                   구매 확정
                 </button>
