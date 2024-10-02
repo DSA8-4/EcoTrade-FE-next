@@ -10,16 +10,20 @@ import styles from './UserBar.module.css';
 const UserBar = () => {
   const { user, logout } = useContext(AuthContext);
   const router = useRouter();
+  const handleProductUpload = () => {
+    if (user !== 'admin') router.push('/productUpload');
+    else router.push('/admin/productUpload');
+  };
 
   return (
     <div className={styles.user}>
       {user ? (
         <div className={styles.loggedIn}>
           <button
-            onClick={() => router.push('/productUpload')}
+            onClick={handleProductUpload}
             type="button"
             className={styles.productUpload}>
-            상품등록
+            {user === 'admin' ? 'eco상품등록' : '상품등록'}
           </button>
           <div
             onClick={() => router.push('/mypage')}

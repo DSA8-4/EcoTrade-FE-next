@@ -173,16 +173,16 @@ const Product = () => {
                   width={500}
                   height={450}
                 />
-                {status === '거래완료' && (
-                  <Image
-                    className={styles.soldOutImage}
-                    src={'/images/sold_out.png'}
-                    alt={'sold_out'}
-                    width={300}
-                    height={300}
-                  />
-                )}
               </div>
+              {status === '거래완료' && (
+                <Image
+                  className={styles.soldOutImage}
+                  src={'/images/sold_out.png'}
+                  alt={'sold_out'}
+                  width={300}
+                  height={300}
+                />
+              )}
               <div className={styles.productInfo}>
                 <h2 className={styles.title}>{title}</h2>
                 <div className={styles.info}>

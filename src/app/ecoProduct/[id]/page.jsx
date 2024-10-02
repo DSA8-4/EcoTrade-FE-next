@@ -3,7 +3,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import styles from './ecoProductDetail.module.css';
 
 const EcoProductDetail = ({ params }) => {
@@ -12,6 +12,7 @@ const EcoProductDetail = ({ params }) => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProductDetail = async () => {
@@ -39,8 +40,23 @@ const EcoProductDetail = ({ params }) => {
       alert('로그인이 필요합니다.');
       return;
     }
-    // 구매하기 버튼 클릭 시 동작을 추가할 수 있습니다.
-    alert('구매하기 버튼이 클릭되었습니다.');
+    const address = prompt('상품을 받을 주소를 입력해주세요');
+
+    console.log(address);
+    if (!address) return;
+    fetch(`http://localhost:8090/EcoProduct/purchase/${id}`, {
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
+      method: 'POST',
+      body: address,
+    }).then((response) => {
+      console.log(response);
+      if (response.status === 400) {
+        alert('보유한 포인트가 부족합니다.');
+        return;
+      }
+      alert('구매가 완료되었습니다.');
+      router.
+    });
   };
 
   const handleThumbnailClick = (index) => {

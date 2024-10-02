@@ -79,8 +79,7 @@
 .product {
   display: flex;
   flex-direction: column;
-  /* list-style: none;
-  text-decoration: none; */
+  position: relative;
   width: 80%;
   border: 1px solid #ddd;
   border-radius: 8px;
