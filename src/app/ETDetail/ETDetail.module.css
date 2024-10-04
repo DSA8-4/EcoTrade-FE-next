@@ -7,7 +7,7 @@
   justify-content: center;
   text-align: center;
   position: relative;
-  flex:1;
+  flex: 1;
 }
 
 .hero::before {
@@ -17,31 +17,34 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(27, 126, 56, 0.6);
+  background-color: #39774cce;
 }
 
 .heroContent {
+  display: flex;
   position: relative;
-  max-width: 800px;
+  /* max-width: 800px; */
   padding: 100px;
-  margin-top: 100px;
-  color: #ffffff;
+  margin-top: 45px;
   z-index: 1;
 }
 
-.subtitle {
+/* .subtitle {
   font-size: 1.5rem;
   margin-bottom: -8px;
-}
+} */
 
 .heading {
   font-size: 3rem;
   margin-bottom: 20px;
-  color: #206958;
+  color: #4caf50;
   background: #eff8f0;
   text-decoration: none;
   padding: 1rem;
   width: 100%;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-size: 20px;
   z-index: 2;
 }
 
@@ -49,9 +52,8 @@
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 1rem;
-  margin-bottom: 1rem;
+  margin-left: 30px;
 }
 
 .content {
@@ -60,31 +62,32 @@
   border-radius: 4px;
 }
 
-.heading {
-  color: #4caf50;
-  margin-top: 15px;
-  margin-bottom: 10px;
-  font-size: 20px;
-}
-
 .p {
   margin: 0 0 1rem;
   color: #333;
 }
 
 .imagePlaceholder {
-  /* width: 100%;
-  height: 250px;
-  background-color: #ddd;
+  width: 100%;
   margin: 1rem 0;
-  margin-bottom: 65px;
   display: flex;
+  margin-top: 20px;
   align-items: center;
   justify-content: center;
-  color: #666;
-  font-size: 1.2rem; */
 }
 
-.sns {
-  color: #1a5c4e;
+.imageDirectDealing {
+  margin-top: 50px;
 }
+
+.imageChatting {
+  margin-top: 20px;
+}
+
+.imageEco {
+  margin-top: 50px;
+}
+
+/* .sns {
+  color: #1a5c4e;
+} */
