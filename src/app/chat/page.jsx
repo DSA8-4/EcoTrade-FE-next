@@ -17,8 +17,7 @@ const Chat = () => {
     })
       .then((response) => response.json())
       .then((roomList) => {
-        const uniqueRooms = Array.from(new Map(roomList.map((room) => [room.id, room])).values());
-        setChatRooms(uniqueRooms);
+        setChatRooms(roomList);
         console.log(roomList);
       })
       .catch((error) => {
@@ -46,17 +45,23 @@ const Chat = () => {
                 width={30}
                 height={30}
               />
-            </div>
-            <div className={styles.text}>
-              <h3 className={styles.nameSender}>
-                <p>품명: {room.name}</p>
-                <p>닉네임: {room.sender}</p>
-              </h3>
-              <div className={styles.messageWrapper}>
-                <p>{room.lastMessage}</p>
-                <span className={styles.date}>{new Date(room.timestamp).toLocaleDateString()}</span>
+              <div className={styles.text}>
+                <h3 className={styles.nameSender}>
+                  <p>품명: {room.name}</p>
+                  <p>닉네임: {room.sender}</p>
+                </h3>
+
+                <div className={styles.messageWrapper}>
+                  <p>{room.lastMessage}</p>
+
+                  <span className={styles.date}>
+                    {new Date(room.timestamp).toLocaleDateString()}
+                  </span>
+                </div>
               </div>
             </div>
+
+            {room.unreadCount > 0 && <p className={styles.unReadMessage}>{room.unreadCount}</p>}
             <div className={styles.productImage}>
               <Image
                 src={room.imageUrl}

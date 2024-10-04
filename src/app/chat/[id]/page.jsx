@@ -30,6 +30,7 @@ const ChatRoom = ({ params: { id } }) => {
       onConnect: () => {
         stomp.current.subscribe(`/sub/chatroom/${id}`, ({ body }) => {
           const message = JSON.parse(body);
+
           setMessages((prev) => [...prev, message]);
         });
       },

@@ -49,22 +49,20 @@ const Buyers = ({ params: { id } }) => {
                   <Image
                     src="/images/profile-icon.png"
                     alt="아이콘"
-                    width={30}
-                    height={30}
+                    width={40}
+                    height={40}
                   />
-                </div>
-                <div
-                  onClick={() => router.push(`/chat/${id}`)}
-                  className={styles.text}>
-                  <h3>{room.sender}</h3>
-                  <div className={styles.messageWrapper}>
-                    <p>{room.lastMessage}</p>
-                    <span className={styles.date}>
-                      {new Date(room.timestamp).toLocaleDateString()}
-                    </span>
+                  <div className={styles.text}>
+                    <h3>{room.sender}</h3>
+                    <div className={styles.messageWrapper}>
+                      <p>{room.lastMessage}</p>
+                      <span className={styles.date}>
+                        {new Date(room.timestamp).toLocaleDateString()}
+                      </span>
+                    </div>
                   </div>
                 </div>
-
+                {room.unreadCount > 0 && <p className={styles.unReadMessage}>{room.unreadCount}</p>}
                 <button
                   onClick={() => selectBuyer(room.sender)}
                   className={styles.assertBuyer}>
