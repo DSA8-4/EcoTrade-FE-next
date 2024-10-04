@@ -1,5 +1,4 @@
 import Image from 'next/image';
-
 import styles from './ETDetail.module.css';
 
 const ETDetail = () => {
@@ -23,10 +22,12 @@ const ETDetail = () => {
             </p>
           </div>
           <div className={styles.imagePlaceholder}>
-          <Image src="/images/중고거래이미지.png"
-            alt="중고거래이미지"
-            width={200}
-            height={200} />
+            <Image
+              src="/images/중고거래이미지.png"
+              alt="중고거래이미지"
+              width={200}
+              height={200}
+            />
           </div>
         </section>
 
@@ -34,21 +35,25 @@ const ETDetail = () => {
           <div className={styles.content}>
             <h2 className={styles.heading}>어떻게 거래하나요?</h2>
             <p className={styles.p}>
-              에코트레이드는 채팅을 이용한 직거래 시스템을 지원합니다. 당신 근처에서
-              시작해보세요!
+              에코트레이드는 채팅을 이용한 직거래 시스템을 지원합니다. 당신 근처에서 시작해보세요!
             </p>
           </div>
-          
-          <div className={styles.imagePlaceholder}>
-          <Image src="/images/채팅아이콘.png"
-            alt="채팅아이콘"
-            width={100}
-            height={100} />
-          <Image src="/images/직거래아이콘.png"
-            alt="직거래아이콘"
-            width={100}
-            height={100} />
 
+          <div className={styles.imageChatting}>
+            <Image
+              src="/images/채팅아이콘.png"
+              alt="채팅아이콘"
+              width={100}
+              height={100}
+            />
+          </div>
+          <div className={styles.imageDirectDealing}>
+            <Image
+              src="/images/직거래아이콘.png"
+              alt="직거래아이콘"
+              width={100}
+              height={100}
+            />
           </div>
         </section>
 
@@ -62,24 +67,26 @@ const ETDetail = () => {
               포인트를 모아 기부해주시면, 나무심기나 쓰레기 정화작업 등의 사업에 도움을 줄 수
               있습니다.
             </p>
-            <p className={styles.p}>
-              EcoTrade공식 SNS에서 전해드리는 환경 정화 작업 소식을 만나보세요!
-            </p>
-            <div className={styles.sns}>sns link삽입</div>
           </div>
-          <div className={styles.imagePlaceholder}>
-            <Image src="/images/EcoPoint친환경상품구매아이콘.png"
-            alt="친환경상품구매아이콘"
-            width={100}
-            height={100} />
-            <Image src="/images/EcoPoint나무심기아이콘.png"
-            alt="나무심기아이콘"
-            width={100}
-            height={100} />
-            <Image src="/images/EcoPoint탄소절감아이콘.png"
-            alt="탄소절감아이콘"
-            width={100}
-            height={100} />
+          <div className={styles.imageEco}>
+            <Image
+              src="/images/EcoPoint친환경상품구매아이콘.png"
+              alt="친환경상품구매아이콘"
+              width={100}
+              height={100}
+            />
+            <Image
+              src="/images/EcoPoint나무심기아이콘.png"
+              alt="나무심기아이콘"
+              width={100}
+              height={100}
+            />
+            <Image
+              src="/images/EcoPoint탄소절감아이콘.png"
+              alt="탄소절감아이콘"
+              width={100}
+              height={100}
+            />
           </div>
         </section>
       </div>

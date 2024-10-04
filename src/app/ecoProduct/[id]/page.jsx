@@ -55,7 +55,7 @@ const EcoProductDetail = ({ params }) => {
         return;
       }
       alert('구매가 완료되었습니다.');
-      router.
+      // router.push(`/ecoProduct`);
     });
   };
 
