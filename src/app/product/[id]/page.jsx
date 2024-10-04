@@ -181,55 +181,59 @@ const ProductDetail = ({ params: { id } }) => {
           </h4>
         </div>
         {product.status !== '거래완료' ? (
-          user && user !== product.seller ? (
-            <div className={styles.buttonGroup}>
-              <button
-                className={`${styles.button} ${styles.favoriteButton}`}
-                onClick={handleFavoriteClick}
-                disabled={!user}>
-                <span>
-                  {isFavorite ? (
-                    <Icon
-                      shape={'round'}
-                      size={'13px'}
-                      color={'red'}>
-                      favorite
-                    </Icon>
-                  ) : (
-                    <Icon
-                      shape={'round'}
-                      size={'13px'}>
-                      favorite_border
-                    </Icon>
-                  )}
-                </span>
-                <span>찜 {localHeart}</span>
-              </button>
-              <button
-                disabled={chatroomLoading}
-                onClick={handleChatRoom}
-                className={`${styles.button} ${styles.contactButton}`}>
-                {chatroomLoading ? '채팅방 생성중' : '채팅하기'}
-              </button>
-            </div>
+          user ? (
+            user !== product.seller ? (
+              <div className={styles.buttonGroup}>
+                <button
+                  className={`${styles.button} ${styles.favoriteButton}`}
+                  onClick={handleFavoriteClick}
+                  disabled={!user}>
+                  <span>
+                    {isFavorite ? (
+                      <Icon
+                        shape={'round'}
+                        size={'13px'}
+                        color={'red'}>
+                        favorite
+                      </Icon>
+                    ) : (
+                      <Icon
+                        shape={'round'}
+                        size={'13px'}>
+                        favorite_border
+                      </Icon>
+                    )}
+                  </span>
+                  <span>찜 {localHeart}</span>
+                </button>
+                <button
+                  disabled={chatroomLoading}
+                  onClick={handleChatRoom}
+                  className={`${styles.button} ${styles.contactButton}`}>
+                  {chatroomLoading ? '채팅방 생성중' : '채팅하기'}
+                </button>
+              </div>
+            ) : (
+              <div className={styles.buttonGroup2}>
+                <button
+                  onClick={handleEdit}
+                  className={styles.button}>
+                  수정하기
+                </button>
+                <button
+                  onClick={handleDelete}
+                  className={`${styles.button} ${styles.buyButton}`}>
+                  삭제하기
+                </button>
+                <button
+                  onClick={() => router.push(`/buyers/${id}`)}
+                  className={`${styles.button} ${styles.selectBuyer}`}>
+                  구매자 확정
+                </button>
+              </div>
+            )
           ) : (
-            <div className={styles.buttonGroup2}>
-              <button
-                onClick={handleEdit}
-                className={styles.button}>
-                수정하기
-              </button>
-              <button
-                onClick={handleDelete}
-                className={`${styles.button} ${styles.buyButton}`}>
-                삭제하기
-              </button>
-              <button
-                onClick={() => router.push(`/buyers/${id}`)}
-                className={`${styles.button} ${styles.selectBuyer}`}>
-                구매자 확정
-              </button>
-            </div>
+            ''
           )
         ) : (
           <div className={styles.sold}>거래가 완료된 상품입니다.</div>
