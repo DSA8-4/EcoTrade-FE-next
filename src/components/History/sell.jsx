@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Icon from '@/components/Icon';
 import { formatPrice } from '@/utils/formatPrice';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './history.module.css';
 
@@ -38,13 +39,19 @@ const Sell = () => {
         {sells.length > 0
           ? sells.map((sell) => (
               <div
-                onClick={() => router.push(`/product/${sell.product_id}`)}
+                onClick={() => router.push(`/product/${sell.id}`)}
                 key={sell.id}
                 className={styles.transactionItem}>
                 <div className={styles.itemInfo}>
                   <span className={styles.itemName}>{sell.title}</span>
                   <span className={styles.itemPrice}>{formatPrice(sell.price)}</span>
                 </div>
+                <Image
+                  src={sell.productImageUrl}
+                  alt="product"
+                  width={32}
+                  height={32}
+                />
                 <span
                   style={{ backgroundColor: productStatus[sell.status][1] }}
                   className={styles.itemStatus}>

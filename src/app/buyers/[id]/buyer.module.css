@@ -66,14 +66,14 @@
 
 .unReadMessage {
   display: flex;
-  width: 28px;
-  height: 28px;
+  width: 16px;
+  height: 16px;
   justify-content: center;
   align-items: center;
   background-color: red;
   border-radius: 50%;
   color: white;
-  font-size: large;
+  font-size: small;
 }
 
 .text h3 {
