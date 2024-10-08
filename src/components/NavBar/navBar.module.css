@@ -18,3 +18,14 @@
   font-weight: bold;
   white-space: nowrap;
 }
+
+.mainNav ul li {
+  transition: background-color 0.2s ease;
+  border-radius: 8px;
+}
+
+.mainNav ul li:hover {
+  background-color: #a8ffab;
+  border-radius: 8px;
+  cursor: pointer;
+}

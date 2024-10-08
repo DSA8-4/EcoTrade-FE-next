@@ -1,0 +1,18 @@
+export const areas = [
+  { value: 'SEOUL', label: '서울특별시' },
+  { value: 'BUSAN', label: '부산광역시' },
+  { value: 'DAEJEON', label: '대전광역시' },
+  { value: 'DAEGU', label: '대구광역시' },
+  { value: 'INCHEON', label: '인천광역시' },
+  { value: 'GWANGJU', label: '광주광역시' },
+  { value: 'ULSAN', label: '울산광역시' },
+  { value: 'SEJONG', label: '세종특별자치시' },
+  { value: 'GYENGGI_DO', label: '경기도' },
+  { value: 'CHUNGCHEONGBUK_DO', label: '강원도' },
+  { value: 'CHUNGCHEONGNAM_DO', label: '충청북도' },
+  { value: 'JEOLLABUK_DO', label: '전라북도' },
+  { value: 'JEOLLANAM_DO', label: '전라남도' },
+  { value: 'GYEONGSANBUK_DO', label: '경상북도' },
+  { value: 'GYEONGSANNAM_DO', label: '경상남도' },
+  { value: 'JEJU', label: '제주도' },
+];

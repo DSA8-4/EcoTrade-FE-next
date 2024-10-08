@@ -31,6 +31,8 @@ const Buyers = ({ params: { id } }) => {
       body: JSON.stringify({ name }),
     }).then((response) => {
       console.log(response);
+      alert('구매가 확정되었습니다.');
+      router.replace('/');
     });
   };
 
@@ -44,7 +46,7 @@ const Buyers = ({ params: { id } }) => {
                 key={`${room.id}-${index}`}
                 className={styles.roomItem}>
                 <div
-                  onClick={() => router.push(`/chat/${id}`)}
+                  onClick={() => router.push(`/chat/${room.id}`)}
                   className={styles.icon}>
                   <Image
                     src="/images/profile-icon.png"
