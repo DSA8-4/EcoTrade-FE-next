@@ -15,19 +15,23 @@ const Buyers = ({ params: { id } }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log('chatroombyid', data);
         setChatRooms(data);
       });
   }, [id]);
 
   const selectBuyer = (name) => {
+    console.log(name);
     fetch(`http://localhost:8090/products/purchase/${id}`, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-      body: { name },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ name }),
+    }).then((response) => {
+      console.log(response);
+    });
   };
 
   return (
@@ -45,24 +49,22 @@ const Buyers = ({ params: { id } }) => {
                   <Image
                     src="/images/profile-icon.png"
                     alt="아이콘"
-                    width={30}
-                    height={30}
+                    width={40}
+                    height={40}
                   />
-                </div>
-                <div
-                  onClick={() => router.push(`/chat/${id}`)}
-                  className={styles.text}>
-                  <h3>{room.sender}</h3>
-                  <div className={styles.messageWrapper}>
-                    <p>{room.lastMessage}</p>
-                    <span className={styles.date}>
-                      {new Date(room.timestamp).toLocaleDateString()}
-                    </span>
+                  <div className={styles.text}>
+                    <h3>{room.sender}</h3>
+                    <div className={styles.messageWrapper}>
+                      <p>{room.lastMessage}</p>
+                      <span className={styles.date}>
+                        {new Date(room.timestamp).toLocaleDateString()}
+                      </span>
+                    </div>
                   </div>
                 </div>
-
+                {room.unreadCount > 0 && <p className={styles.unReadMessage}>{room.unreadCount}</p>}
                 <button
-                  onClick={(room) => selectBuyer(room.sender)}
+                  onClick={() => selectBuyer(room.sender)}
                   className={styles.assertBuyer}>
                   구매 확정
                 </button>

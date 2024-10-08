@@ -35,41 +35,20 @@ const Sell = () => {
         <p>판매 목록</p>
       </h2>
       <div className={styles.transactionList}>
-        {/* <div className={styles.transactionItem}>
-          <div className={styles.itemInfo}>
-            <span className={styles.itemName}>상품 X</span>
-            <span className={styles.itemPrice}>₩25,000</span>
-          </div>
-          <span className={`${styles.itemStatus} ${styles.statusOnSale}`}>판매중</span>
-        </div>
-        <div className={styles.transactionItem}>
-          <div className={styles.itemInfo}>
-            <span className={styles.itemName}>상품 Y</span>
-            <span className={styles.itemPrice}>₩18,000</span>
-          </div>
-          <span className={`${styles.itemStatus} ${styles.statusInProgress}`}>거래중</span>
-        </div>
-        <div className={styles.transactionItem}>
-          <div className={styles.itemInfo}>
-            <span className={styles.itemName}>상품 Z</span>
-            <span className={styles.itemPrice}>₩40,000</span>
-          </div>
-          <span className={`${styles.itemStatus} ${styles.statusCompleted}`}>거래완료</span>
-        </div> */}
         {sells.length > 0
           ? sells.map((sell) => (
               <div
                 onClick={() => router.push(`/product/${sell.product_id}`)}
-                key={sell.product_id}
+                key={sell.id}
                 className={styles.transactionItem}>
                 <div className={styles.itemInfo}>
                   <span className={styles.itemName}>{sell.title}</span>
                   <span className={styles.itemPrice}>{formatPrice(sell.price)}</span>
                 </div>
                 <span
-                  // style={{ backgroundColor: productStatus[sell.status][1] }}
+                  style={{ backgroundColor: productStatus[sell.status][1] }}
                   className={styles.itemStatus}>
-                  {/* {productStatus[sell.status][0]} */}
+                  {productStatus[sell.status][0]}
                 </span>
               </div>
             ))

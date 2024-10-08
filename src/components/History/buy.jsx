@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 import Icon from '@/components/Icon';
+import { useRouter } from 'next/navigation';
 import styles from './history.module.css';
 
 const Buy = () => {
   const [buys, setBuys] = useState([]);
+  const router = useRouter();
+
   useEffect(() => {
     fetch(`http://localhost:8090/members/mypage/purchases`, {
       headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setBuys(data);
       });
   }, []);
@@ -26,27 +28,24 @@ const Buy = () => {
         <p>구매 목록</p>
       </h2>
       <div className={styles.transactionList}>
-        {/* <div className={styles.transactionItem}>
-          <div className={styles.itemInfo}>
-            <span className={styles.itemName}>상품 A</span>
-            <span className={styles.itemPrice}>₩20,000</span>
-          </div>
-          <span className={`${styles.itemStatus} ${styles.statusOnSale}`}>판매중</span>
-        </div>
-        <div className={styles.transactionItem}>
-          <div className={styles.itemInfo}>
-            <span className={styles.itemName}>상품 B</span>
-            <span className={styles.itemPrice}>₩15,000</span>
-          </div>
-          <span className={`${styles.itemStatus} ${styles.statusInProgress}`}>거래중</span>
-        </div>
-        <div className={styles.transactionItem}>
-          <div className={styles.itemInfo}>
-            <span className={styles.itemName}>상품 C</span>
-            <span className={styles.itemPrice}>₩30,000</span>
-          </div>
-          <span className={`${styles.itemStatus} ${styles.statusCompleted}`}>거래완료</span>
-        </div> */}
+        {buys.length > 0
+          ? buys.map((buy) => (
+              <div
+                onClick={() => router.push(`/product/${buy.product_id}`)}
+                key={buy.id}
+                className={styles.transactionItem}>
+                <div className={styles.itemInfo}>
+                  <span className={styles.itemName}>{buy.title}</span>
+                  {/* <span className={styles.itemPrice}>{formatPrice(buy.price)}</span> */}
+                </div>
+                <span
+                  // style={{ backgroundColor: productStatus[sell.status][1] }}
+                  className={styles.itemStatus}>
+                  {/* {productStatus[sell.status][0]} */}
+                </span>
+              </div>
+            ))
+          : ''}
       </div>
     </section>
   );

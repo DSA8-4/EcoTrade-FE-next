@@ -3,7 +3,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import styles from './ecoProductDetail.module.css';
 
 const EcoProductDetail = ({ params }) => {
@@ -12,7 +11,6 @@ const EcoProductDetail = ({ params }) => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchProductDetail = async () => {
@@ -55,7 +53,6 @@ const EcoProductDetail = ({ params }) => {
         return;
       }
       alert('구매가 완료되었습니다.');
-      // router.push(`/ecoProduct`);
     });
   };
 

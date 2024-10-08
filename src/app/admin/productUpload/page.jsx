@@ -90,6 +90,7 @@ const ProductUpload = () => {
 
     return Promise.all(uploadPromises);
   };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.h1}>상품 등록(관리자 전용)</h1>
