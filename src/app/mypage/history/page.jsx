@@ -1,6 +1,7 @@
 'use client';
 
 import Buy from '@/components/History/buy';
+import EcoBuy from '@/components/History/ecoBuy';
 import Sell from '@/components/History/sell';
 import Icon from '@/components/Icon';
 import Link from 'next/link';
@@ -15,8 +16,11 @@ const History = () => {
           거래내역
         </h1>
       </header>
-      <Buy />
-      <Sell />
+      <div className={styles.history}>
+        <Buy />
+        <Sell />
+        <EcoBuy />
+      </div>
       <div className={styles.navigationButtons}>
         <Link
           href="/"

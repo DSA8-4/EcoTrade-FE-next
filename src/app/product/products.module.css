@@ -19,6 +19,8 @@
 
 .filterContainer {
   display: flex;
+  width: 100%;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 20px;
   position: relative;
@@ -27,8 +29,7 @@
 .dropdownToggle {
   display: flex;
   align-items: center;
-  margin-right: 925px;
-  justify-content: space-between;
+  justify-content: flex-start;
   min-width: 130px;
   color: black;
   font-weight: bold;
