@@ -1,17 +1,24 @@
 .transactionSection {
+  display: flex;
+  flex-direction: column;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 8px;
+  width: 280px;
 }
 
 .h2 {
   display: flex;
   align-items: center;
+  user-select: none;
 }
 
 .transactionList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -25,7 +32,7 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 8px;
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
   cursor: pointer;
 }
 
