@@ -10,7 +10,10 @@ const NavBar = () => {
 
   const navItems = [
     { name: '상품목록', link: '/product' },
-    { name: user !== 'admin' ? '채팅목록' : '구입요청', link: '/chat' },
+    {
+      name: user === 'admin' ? 'Eco상품구매내역' : '채팅목록',
+      link: user === 'admin' ? '/admin/productPurchaseHistroy' : '/chat',
+    },
     { name: 'EcoShop', link: '/ecoProduct' },
     { name: 'Eco포인트란?', link: '/EcoPoint' },
   ];

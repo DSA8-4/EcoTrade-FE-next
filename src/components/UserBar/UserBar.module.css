@@ -1,6 +1,7 @@
 .user {
   display: flex;
   width: 300px;
+  /* margin-left: 15px; */
 }
 
 .logoutButton,
@@ -16,7 +17,6 @@
   text-decoration: none;
   color: #4b4848;
   font-weight: bold;
-  padding: 0 1rem;
   cursor: pointer;
   white-space: nowrap;
   background: none;
@@ -24,9 +24,28 @@
   font-size: inherit;
 }
 
+.productUpload {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.login,
+.register {
+  padding-left: 20px;
+}
+
 .profile {
   display: flex;
   align-items: center;
+  margin-right: 10px;
   gap: 0.5rem;
   cursor: pointer;
+}
+
+.loggedIn,
+.login,
+.logoutButton,
+.register,
+.productUpload:hover {
+  color: #2c2c2c;
 }

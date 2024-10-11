@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './ecoProduct.module.css';
@@ -10,6 +11,7 @@ const EcoProduct = () => {
   const [ecoProducts, setEcoProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -51,13 +53,7 @@ const EcoProduct = () => {
   };
 
   const handleEditClick = (id) => {
-    // e.stopPropagation();
-    // if (user) {
     router.push(`ecoProduct/Edit/${id}`);
-    // } else {
-    //   alert('수정하려면 로그인이 필요합니다.');
-    //   router.push('/login');
-    // }
   };
 
   const handleDeleteClick = async (id) => {
@@ -116,17 +112,20 @@ const EcoProduct = () => {
                   <div className={styles.info}>
                     <p className={styles.price}>{product.price} P</p>
                   </div>
-                  <button
-                    className={styles.editButton}
-                    onClick={() => handleEditClick(product.ecoProductId)}>
-                    수정하기
-                  </button>
-                  <button
-                    className={styles.deleteButton}
-                    onClick={() => handleDeleteClick(product.ecoProductId)}>
-                    삭제하기
-                  </button>
-                  {/* <p className={styles.time}>{product.createdTime}</p> */}
+                  {user === 'admin' && ( // 관리자일 경우에만 수정 및 삭제 버튼 표시
+                    <>
+                      <button
+                        className={styles.editButton}
+                        onClick={() => handleEditClick(product.ecoProductId)}>
+                        수정하기
+                      </button>
+                      <button
+                        className={styles.deleteButton}
+                        onClick={() => handleDeleteClick(product.ecoProductId)}>
+                        삭제하기
+                      </button>
+                    </>
+                  )}
                 </div>
               </li>
             ))
