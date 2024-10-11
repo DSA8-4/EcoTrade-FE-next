@@ -21,6 +21,12 @@
   left: 50%; */
 }
 
+.history {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+
 .navButton {
   text-decoration: none;
   color: #fff;

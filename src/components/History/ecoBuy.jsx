@@ -1,27 +1,24 @@
 import { useEffect, useState } from 'react';
-import Icon from '@/components/Icon';
-import { formatPrice } from '@/utils/formatPrice';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Icon from '../Icon';
 import styles from './history.module.css';
 
 const productStatus = {
-  TRADING: ['판매중', '#4caf50'],
-  RESERVED: ['예약중', '#ff9800'],
-  COMPLETED: ['판매완료', '#2196f3'],
+  RESERVED: ['처리중', '#ff9800'],
+  COMPLETED: ['처리완료', '#2196f3'],
 };
-const Sell = () => {
-  const [sells, setSells] = useState([]);
+
+const EcoBuy = () => {
+  const [ecoBuys, setEcoBuys] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`http://localhost:8090/members/mypage/sales`, {
-      headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-    })
+    fetch(`http://localhost:8090/EcoProduct/history/${sessionStorage.getItem('member_id')}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setSells(data);
+        setEcoBuys(data);
       });
   }, []);
 
@@ -31,31 +28,30 @@ const Sell = () => {
         <Icon
           size={'32x'}
           color={'#4caf50'}>
-          sell
+          star_border
         </Icon>
-        <p>판매 목록</p>
+        <p>Eco 상품 구매내역</p>
       </h2>
       <div className={styles.transactionList}>
-        {sells.length > 0
-          ? sells.map((sell) => (
+        {ecoBuys.length > 0
+          ? ecoBuys.map((ecobuy) => (
               <div
-                onClick={() => router.push(`/product/${sell.id}`)}
-                key={sell.id}
+                onClick={() => router.push(`/ecoProduct/${ecobuy.id}`)}
+                key={ecobuy.title}
                 className={styles.transactionItem}>
                 <div className={styles.itemInfo}>
-                  <span className={styles.itemName}>{sell.title}</span>
-                  <span className={styles.itemPrice}>{formatPrice(sell.price)}</span>
+                  <span className={styles.itemName}>{ecobuy.title}</span>
                 </div>
                 <Image
-                  src={sell.productImageUrl}
+                  src={ecobuy.imageUrl}
                   alt="product"
                   width={32}
                   height={32}
                 />
                 <span
-                  style={{ backgroundColor: productStatus[sell.status][1] }}
+                  style={{ backgroundColor: productStatus[ecobuy.status][1] }}
                   className={styles.itemStatus}>
-                  {productStatus[sell.status][0]}
+                  {productStatus[ecobuy.status][0]}
                 </span>
               </div>
             ))
@@ -64,4 +60,4 @@ const Sell = () => {
     </section>
   );
 };
-export default Sell;
+export default EcoBuy;

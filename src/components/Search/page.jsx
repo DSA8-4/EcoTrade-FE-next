@@ -8,7 +8,6 @@ const Search = () => {
   const searchText = (e) => {
     if (e.key === 'Enter') {
       router.push(`/product?search=${e.target.value}`);
-      console.log(e.target.value);
     }
   };
 

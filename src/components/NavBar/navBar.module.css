@@ -19,6 +19,16 @@
   white-space: nowrap;
 }
 
-.mainNav a:hover {
-  color: #2c2c2c;
+
+.mainNav ul li {
+  transition: background-color 0.2s ease;
+  border-radius: 8px;
 }
+
+.mainNav ul li:hover {
+  background-color: #a8ffab;
+  color: #2c2c2c;
+  border-radius: 8px;
+  cursor: pointer;
+}
+

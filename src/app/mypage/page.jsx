@@ -2,24 +2,26 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Icon from '@/components/Icon';
+import { areas } from '@/utils/area';
 import { firebaseConfig } from '@/utils/config';
 import { initializeApp } from 'firebase/app';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import styles from './mypage.module.css';
 
 const MyPage = () => {
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
-  // const [profileImage, setProfileImage] = useState('');
   const imageInput = useRef(null);
+  const router = useRouter();
   const [myInfo, setMyInfo] = useState({
     name: '',
     email: '',
     member_id: '',
     eco_point: 0,
     profileImageUrl: null,
+    area: 'SEOUL',
   });
 
   useEffect(() => {
@@ -44,8 +46,26 @@ const MyPage = () => {
   const profileChange = () => {
     fetch(`http://localhost:8090/members/${sessionStorage.getItem('member_id')}`, {
       method: 'PUT',
-      headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-    }).then((response) => console.log(response));
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: myInfo.name,
+        email: myInfo.email,
+        profileImageUrl: myInfo.profileImageUrl,
+        area: myInfo.area,
+      }),
+    }).then((response) => {
+      alert('회원정보가 수정되었습니다.');
+      console.log(response);
+    });
+    // console.log({
+    //   name: myInfo.name,
+    //   email: myInfo.email,
+    //   profileImageUrl: myInfo.profileImageUrl,
+    //   area: myInfo.area,
+    // });
   };
 
   const profileImageChange = (url) => {
@@ -60,6 +80,7 @@ const MyPage = () => {
       .then((response) => response.json())
       .then((data) => console.log(data));
   };
+
   const profileImageUpload = (fileItem) => {
     const storageRef = ref(storage, 'images/' + fileItem.name);
     const uploadTask = uploadBytesResumable(storageRef, fileItem);
@@ -110,36 +131,11 @@ const MyPage = () => {
         <strong>Member ID: {myInfo && myInfo.member_id}</strong>
       </div>
 
-      {/* <div className={styles.infoBox}>
-        <div className={styles.inlineContainer}>
-          <strong>Name: </strong>
-          <input
-            type="text"
-            name="name"
-            value={myInfo.name || ''}
-            className={styles.smallInputField}
-            onChange={(e) => setMyInfo({ ...myInfo, name: e.target.value })}
-          />
-        </div>
-      </div>
-
       <div className={styles.infoBox}>
         <div className={styles.inlineContainer}>
-          <strong>Email: </strong>
+          <label htmlFor="name">Name: </label>
           <input
-            type="email"
-            name="email"
-            value={myInfo.email || ''}
-            className={styles.smallInputField}
-            onChange={(e) => setMyInfo({ ...myInfo, email: e.target.value })}
-          />
-        </div>
-      </div> */}
-
-      <div className={styles.infoBox}>
-        <div className={styles.inlineContainer}>
-          <strong>Name: </strong>
-          <input
+            placeholer="name"
             type="text"
             name="name"
             value={myInfo.name || ''}
@@ -148,14 +144,32 @@ const MyPage = () => {
           />
         </div>
         <div className={styles.inlineContainer}>
-          <strong>Email : </strong>
+          <label htmlFor="email">Email : </label>
           <input
+            placeholer="email"
             type="email"
             name="email"
             value={myInfo.email || ''}
             className={styles.smallInputField}
             onChange={(e) => setMyInfo({ ...myInfo, email: e.target.value })}
           />
+        </div>
+        <div className={styles.inlineContainer}>
+          <label htmlFor="area">지역 선택: </label>
+          <select
+            name="area"
+            title="지역 선택"
+            onChange={(e) => setMyInfo({ ...myInfo, area: e.target.value })}
+            className={styles.select}
+            value={myInfo.area}>
+            {areas.map((area) => (
+              <option
+                key={area.value}
+                value={area.value}>
+                {area.label}
+              </option>
+            ))}
+          </select>
         </div>
         <div className={styles.deleteAccountContainer}>
           <button
@@ -163,7 +177,6 @@ const MyPage = () => {
             className={`${styles.button} ${styles.editProfileButton}`}>
             회원 정보 수정
           </button>
-          <button className={`${styles.button} ${styles.cancelProfileButton}`}>취소</button>
         </div>
       </div>
 
@@ -172,11 +185,11 @@ const MyPage = () => {
       </div>
 
       <div className={styles.deleteAccountContainer}>
-        <Link href="/mypage/history">
-          <button className={`${styles.button} ${styles.transactionHistoryButton}`}>
-            거래내역
-          </button>
-        </Link>
+        <button
+          onClick={() => router.push('/mypage/history')}
+          className={`${styles.button} ${styles.transactionHistoryButton}`}>
+          거래내역
+        </button>
         <button className={`${styles.button} ${styles.deleteAccountButton}`}>회원탈퇴</button>
       </div>
     </div>
