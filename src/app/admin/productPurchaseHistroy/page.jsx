@@ -17,7 +17,6 @@ const ProductPurchaseHistory = () => {
       try {
         const token = sessionStorage.getItem('token');
         if (!token) {
-          setIsAdmin(false);
           return;
         }
         const response = await fetch('http://localhost:8090/EcoProduct/allHistory', {

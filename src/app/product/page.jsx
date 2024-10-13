@@ -185,23 +185,29 @@ const Product = () => {
               )}
               <div className={styles.productInfo}>
                 <h2 className={styles.title}>{title}</h2>
-                <div className={styles.info}>
+                <div className={styles.priceContainer}>
+                  <div className={styles.stats}>
+                    <div className={styles.stat}>
+                      <Icon>favorite</Icon>
+                      <p>{heart}</p>
+                    </div>
+                  </div>
                   <p className={styles.price}>{price.toLocaleString()}원</p>
-                  <p className={styles.time}>{timeAgo(createdTime)}</p>
-                </div>
-                <div className={styles.stats}>
-                  <div className={styles.stat}>
-                    <Icon>favorite</Icon>
-                    <p>{heart}</p>
-                  </div>
-                  <div className={styles.stat}>
-                    <Icon>visibility</Icon>
-                    <p>{hit}</p>
+                  <div className={styles.stats}>
+                    <div className={styles.stat}>
+                      <Icon>visibility</Icon>
+                      <p>{hit}</p>
+                    </div>
                   </div>
                 </div>
+                <p className={styles.time}>{timeAgo(createdTime)}</p>
               </div>
               {status === '거래중' && seller === sessionStorage.getItem('name') && (
-                <button onClick={(e) => handleEdit(e, productId)}>수정</button>
+                <button
+                  className={styles.update}
+                  onClick={(e) => handleEdit(e, productId)}>
+                  수정
+                </button>
               )}
             </li>
           ),
