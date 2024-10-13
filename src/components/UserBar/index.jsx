@@ -32,11 +32,6 @@ const UserBar = () => {
               className={styles.profilePicture}
               width={30}
               height={30}
-              // src={
-              //   typeof window !== 'undefined' && sessionStorage.getItem('profileImage') === 'null'
-              //     ? '/images/profile-icon.png'
-              //     : sessionStorage.getItem('profileImage')
-              // }
               src={
                 profileImage
                   ? profileImage === 'null'

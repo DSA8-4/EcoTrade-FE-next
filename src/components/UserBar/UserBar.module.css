@@ -29,6 +29,10 @@
   margin-right: 10px;
 }
 
+.name {
+  white-space: nowrap;
+}
+
 .login,
 .register {
   padding-left: 20px;
