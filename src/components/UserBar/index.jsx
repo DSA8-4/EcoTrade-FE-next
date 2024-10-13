@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import styles from './UserBar.module.css';
 
 const UserBar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, profileImage, logout } = useContext(AuthContext);
   const router = useRouter();
   const handleProductUpload = () => {
     if (user !== 'admin') router.push('/productUpload');
@@ -29,10 +29,15 @@ const UserBar = () => {
             onClick={() => router.push('/mypage')}
             className={styles.profile}>
             <Image
-              className="profilePicture"
-              width={25}
-              height={25}
-              src={'/images/profile-icon.png'}
+              className={styles.profilePicture}
+              width={30}
+              height={30}
+              // src={
+              //   typeof window !== 'undefined' && sessionStorage.getItem('profileImage') === 'null'
+              //     ? '/images/profile-icon.png'
+              //     : sessionStorage.getItem('profileImage')
+              // }
+              src={profileImage === 'null' ? '/images/profile-icon.png' : profileImage}
               alt="프로필"
               loading="eager"
             />

@@ -1,10 +1,13 @@
 'use client';
 
+import { useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import styles from './home.module.css';
 
 const Home = () => {
   const router = useRouter();
+  const { user } = useContext(AuthContext);
 
   return (
     <section className={styles.container}>
@@ -16,7 +19,7 @@ const Home = () => {
         </p>
         <div className={styles.ctaButtons}>
           <button
-            onClick={() => router.push('/register')}
+            onClick={() => (user ? router.push('/productUpload') : router.push('/register'))}
             className={`${styles.btn} ${styles.btnPrimary}`}>
             지금 시작하기
           </button>

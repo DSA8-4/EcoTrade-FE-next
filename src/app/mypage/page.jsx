@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Icon from '@/components/Icon';
+import { AuthContext } from '@/context/AuthContext';
 import { areas } from '@/utils/area';
 import { firebaseConfig } from '@/utils/config';
 import { initializeApp } from 'firebase/app';
@@ -13,6 +14,7 @@ import styles from './mypage.module.css';
 const MyPage = () => {
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
+  const { setUser, setProfileImage } = useContext(AuthContext);
   const imageInput = useRef(null);
   const router = useRouter();
   const [myInfo, setMyInfo] = useState({
@@ -58,14 +60,10 @@ const MyPage = () => {
       }),
     }).then((response) => {
       alert('회원정보가 수정되었습니다.');
+      setUser(myInfo.name);
+      sessionStorage.setItem('name', myInfo.name);
       console.log(response);
     });
-    // console.log({
-    //   name: myInfo.name,
-    //   email: myInfo.email,
-    //   profileImageUrl: myInfo.profileImageUrl,
-    //   area: myInfo.area,
-    // });
   };
 
   const profileImageChange = (url) => {
@@ -78,7 +76,11 @@ const MyPage = () => {
       body: JSON.stringify({ url }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        setProfileImage(url);
+        sessionStorage.setItem('profileImage', url);
+      });
   };
 
   const profileImageUpload = (fileItem) => {
