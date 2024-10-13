@@ -34,10 +34,10 @@ const EcoBuy = () => {
       </h2>
       <div className={styles.transactionList}>
         {ecoBuys.length > 0
-          ? ecoBuys.map((ecobuy) => (
+          ? ecoBuys.map((ecobuy, idx) => (
               <div
                 onClick={() => router.push(`/ecoProduct/${ecobuy.id}`)}
-                key={ecobuy.title}
+                key={idx}
                 className={styles.transactionItem}>
                 <div className={styles.itemInfo}>
                   <span className={styles.itemName}>{ecobuy.title}</span>

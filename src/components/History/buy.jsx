@@ -15,7 +15,7 @@ const Buy = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log('구매', data);
         setBuys(data);
       });
   }, []);
@@ -57,7 +57,7 @@ const Buy = () => {
         {buys.length > 0
           ? buys.map((buy) => (
               <div
-                onClick={() => router.push(`/product/${buy.product_id}`)}
+                onClick={() => router.push(`/product/${buy.productId}`)}
                 key={buy.productId}
                 className={styles.transactionItem}>
                 <div className={styles.itemInfo}>
