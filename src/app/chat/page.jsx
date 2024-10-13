@@ -31,7 +31,7 @@ const Chat = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Chat List</h2>
+      {/* <h2>Chat List</h2> */}
       <div className={styles.roomList}>
         {chatRooms.map((room, index) => (
           <div
