@@ -37,7 +37,13 @@ const UserBar = () => {
               //     ? '/images/profile-icon.png'
               //     : sessionStorage.getItem('profileImage')
               // }
-              src={profileImage === 'null' ? '/images/profile-icon.png' : profileImage}
+              src={
+                profileImage
+                  ? profileImage === 'null'
+                    ? '/images/profile-icon.png'
+                    : profileImage
+                  : '/images/profile-icon.png'
+              }
               alt="프로필"
               loading="eager"
             />
