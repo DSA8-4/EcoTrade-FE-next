@@ -186,7 +186,7 @@ const Product = () => {
               <div className={styles.productInfo}>
                 <h2 className={styles.title}>{title}</h2>
                 <div className={styles.info}>
-                  <p className={styles.price}>{price.toLocaleString()}원</p>
+                  <p className={styles.price}>{price && price.toLocaleString()}원</p>
                   <p className={styles.time}>{timeAgo(createdTime)}</p>
                 </div>
                 <div className={styles.stats}>
