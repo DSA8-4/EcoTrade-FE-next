@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
+    setProfileImage(null);
     sessionStorage.clear();
     router.push('/login');
   };

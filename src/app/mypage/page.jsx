@@ -192,7 +192,7 @@ const MyPage = () => {
           className={`${styles.button} ${styles.transactionHistoryButton}`}>
           거래내역
         </button>
-        <button className={`${styles.button} ${styles.deleteAccountButton}`}>회원탈퇴</button>
+        {/* <button className={`${styles.button} ${styles.deleteAccountButton}`}>회원탈퇴</button> */}
       </div>
     </div>
   );
