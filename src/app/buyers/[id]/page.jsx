@@ -29,11 +29,13 @@ const Buyers = ({ params: { id } }) => {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },
       body: JSON.stringify({ name }),
-    }).then((response) => {
-      console.log(response);
-      alert('구매가 확정되었습니다.');
-      router.replace('/');
-    });
+    })
+      .then((response) => {
+        console.log(response);
+        alert('구매가 확정되었습니다.');
+        router.replace('/');
+      })
+      .catch(() => alert('구매확정을 할 수 없습니다.'));
   };
 
   return (
@@ -55,6 +57,7 @@ const Buyers = ({ params: { id } }) => {
                     height={40}
                   />
                   <div className={styles.text}>
+                    <h3>{room.otherPerson}님과의 대화</h3>
                     <h3>{room.sender}</h3>
                     <div className={styles.messageWrapper}>
                       <p>{room.lastMessage}</p>
@@ -66,7 +69,7 @@ const Buyers = ({ params: { id } }) => {
                 </div>
                 {room.unreadCount > 0 && <p className={styles.unReadMessage}>{room.unreadCount}</p>}
                 <button
-                  onClick={() => selectBuyer(room.sender)}
+                  onClick={() => selectBuyer(room.otherPerson)}
                   className={styles.assertBuyer}>
                   구매 확정
                 </button>

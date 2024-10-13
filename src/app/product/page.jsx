@@ -185,12 +185,14 @@ const Product = () => {
               )}
               <div className={styles.productInfo}>
                 <h2 className={styles.title}>{title}</h2>
+
                 <div className={styles.priceContainer}>
                   <div className={styles.stats}>
                     <div className={styles.stat}>
                       <Icon>favorite</Icon>
                       <p>{heart}</p>
                     </div>
+
                   </div>
                   <p className={styles.price}>{price.toLocaleString()}원</p>
                   <div className={styles.stats}>
